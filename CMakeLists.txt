@@ -29,11 +29,3 @@ target_include_directories(vulkan_stuff PRIVATE ${Vulkan_INCLUDE_DIRS})
 
 target_link_libraries(vulkan_stuff ${SDL2_LIBRARIES})
 target_link_libraries(vulkan_stuff ${Vulkan_LIBRARIES})
-
-message(SDL2_LIBRARIES="${SDL2_LIBRARIES}")
-message(vulkan include shit="${Vulkan_INCLUDE_DIRS}")
-
-# set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-# set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-# include(CPack)
-#
