@@ -23,7 +23,7 @@
 const int W_WIDTH = 900;
 const int W_HEIGHT = 600;
 
-
+#undef main
 
 void createInstance(SDL_Window* window) {
     
