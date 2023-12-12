@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/niooi/Projects/Cpp/vulkan_stuff/build",
+  "command": "/usr/bin/g++ -I/home/niooi/Projects/Cpp/vulkan_stuff/engine -isystem /usr/local/include/SDL2 -g -o CMakeFiles/vulkan_stuff.dir/main.cpp.o -c /home/niooi/Projects/Cpp/vulkan_stuff/main.cpp",
+  "file": "/home/niooi/Projects/Cpp/vulkan_stuff/main.cpp",
+  "output": "CMakeFiles/vulkan_stuff.dir/main.cpp.o"
+},
+{
+  "directory": "/home/niooi/Projects/Cpp/vulkan_stuff/build",
+  "command": "/usr/bin/g++ -I/home/niooi/Projects/Cpp/vulkan_stuff/engine -isystem /usr/local/include/SDL2 -g -o CMakeFiles/vulkan_stuff.dir/Window.cpp.o -c /home/niooi/Projects/Cpp/vulkan_stuff/Window.cpp",
+  "file": "/home/niooi/Projects/Cpp/vulkan_stuff/Window.cpp",
+  "output": "CMakeFiles/vulkan_stuff.dir/Window.cpp.o"
+},
+{
+  "directory": "/home/niooi/Projects/Cpp/vulkan_stuff/build",
+  "command": "/usr/bin/g++ -I/home/niooi/Projects/Cpp/vulkan_stuff/engine -isystem /usr/local/include/SDL2 -g -o CMakeFiles/vulkan_stuff.dir/VulkanRenderer.cpp.o -c /home/niooi/Projects/Cpp/vulkan_stuff/VulkanRenderer.cpp",
+  "file": "/home/niooi/Projects/Cpp/vulkan_stuff/VulkanRenderer.cpp",
+  "output": "CMakeFiles/vulkan_stuff.dir/VulkanRenderer.cpp.o"
+}
+]

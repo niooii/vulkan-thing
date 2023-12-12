@@ -1,0 +1,8 @@
+# ninja log v5
+3	3565	1702402126132289634	CMakeFiles/vulkan_stuff.dir/main.cpp.o	b3498d64d7cec312
+5	1176	1702402228562874504	CMakeFiles/vulkan_stuff.dir/VulkanRenderer.cpp.o	136e0c65119c1513
+1176	1296	1702402228679553320	vulkan_stuff	373bd1b935d75c64
+3	1101	1702402123668704005	CMakeFiles/vulkan_stuff.dir/Window.cpp.o	f14070ffbdee74c4
+4	5149	1702409959877088706	CMakeFiles/vulkan_stuff.dir/main.cpp.o	b3498d64d7cec312
+5	5167	1702409959893770924	CMakeFiles/vulkan_stuff.dir/VulkanRenderer.cpp.o	136e0c65119c1513
+5167	5263	1702409959987191346	vulkan_stuff	373bd1b935d75c64
