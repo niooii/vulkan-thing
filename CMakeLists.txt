@@ -1,16 +1,12 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(vulkan_stuff VERSION 0.1.0 LANGUAGES C CXX)
 
-include(CTest)
-
 if (WIN32) 
     set(SDL2_DIR "E:\\clibs\\SDL2-2.28.5\\cmake")
 endif()
 
 find_package(SDL2 REQUIRED)
 find_package(Vulkan REQUIRED)
-
-message(VULKAN_STUFF="${Vulkan_LIBRARIES}")
 
 add_executable(vulkan_stuff 
 main.cpp
