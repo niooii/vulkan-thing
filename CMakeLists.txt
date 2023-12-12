@@ -8,7 +8,7 @@ find_package(Vulkan REQUIRED)
 
 message(VULKAN_STUFF="${Vulkan_LIBRARIES}")
 
-include_directories(engine ${SDL2_INCLUDE_DIRS})   
+include_directories(engine ${SDL2_INCLUDE_DIRS}/SDL2)   
 
 add_executable(vulkan_stuff 
 main.cpp
