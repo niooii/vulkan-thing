@@ -65,7 +65,6 @@ private:
     uint16_t width, height;
     const char* name;
     SDL_Window* window;
-    SDL_GLContext context;
     bool running{true};
     SDL_Event e;
 

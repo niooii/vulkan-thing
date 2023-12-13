@@ -11,28 +11,19 @@ void Window::create(int w, int h, const char *n) {
   height = h;
   name = n;
 
-  SDL_Init(SDL_INIT_EVERYTHING);
-
-  // FUCK MY LIFE
-
-  // create a context of version 3.3 and use core profile
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+  SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
   // make it so the screen doesn't flicker on KDE
   SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 
-  uint32_t WindowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_VULKAN;
+  uint32_t WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_VULKAN;
   window = SDL_CreateWindow("OpenGL Test", 0, 0, w, h, WindowFlags);
-  context = SDL_GL_CreateContext(window);
 }
 
 void Window::close() {
   //    glDeleteProgram(solidProgram);
   //    glDeleteProgram(wireframeProgram);
   running = false;
-  SDL_GL_DeleteContext(context);
   SDL_DestroyWindow(window);
   SDL_Quit();
 }
