@@ -7,20 +7,29 @@
 // #include "Window.h"
 #include "Globals.h"
 
+using namespace vk;
+
 class VulkanRenderer {
 public:
   VulkanRenderer();
   ~VulkanRenderer();
 
-  vk::Result init(SDL_Window *windowTarget);
+  Result init(SDL_Window *windowTarget);
 
 private:
   SDL_Window *window;
 
   // vulkan components
-  vk::Instance instance;
+  Instance instance;
+  struct MainDevice {
+    PhysicalDevice physical;
+    Device logical;
+  };
 
   // vulkan functions
   void createInstance();
+
+  void getPhysicalDevice();
+
   bool extensionsAreSupported(std::vector<const char*>* extensionNames);
 };

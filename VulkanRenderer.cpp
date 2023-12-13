@@ -1,5 +1,6 @@
 #include "VulkanRenderer.h"
 #include "vulkan/vulkan.hpp"
+#include "vulkan/vulkan_handles.hpp"
 
 using std::vector;
 using globals::logger;
@@ -14,13 +15,14 @@ Result VulkanRenderer::init(SDL_Window* windowTarget) {
     window = windowTarget;
 
     createInstance();
+    getPhysicalDevice();
     
     return Result::eSuccess;
 }
 
 void VulkanRenderer::createInstance() {
 
-    vk::ApplicationInfo appInfo{};
+    ApplicationInfo appInfo{};
     appInfo.sType = vk::StructureType::eApplicationInfo;
     appInfo.pApplicationName = "Vulkan app woo";
     appInfo.applicationVersion = vk::makeApiVersion(1, 0, 0, 0);
@@ -66,6 +68,17 @@ void VulkanRenderer::createInstance() {
 
     if(devices.empty()) {
         logger.warn("There is no device available.");
+    }
+}
+
+void VulkanRenderer::getPhysicalDevice() {
+    unsigned int count;
+    instance.enumeratePhysicalDevices(&count, nullptr);
+    vector<PhysicalDevice> devices{count};
+    instance.enumeratePhysicalDevices(&count, devices.data());
+
+    for(auto& device : devices) {
+        std::cout << device.getProperties().deviceName << '\n';
     }
 }
 
