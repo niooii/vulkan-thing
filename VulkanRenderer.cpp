@@ -46,7 +46,6 @@ void VulkanRenderer::createInstance() {
     if ((result = vk::createInstance(&createInfo, nullptr, &instance)) != Result::eSuccess) {
         logger.err("Failed to create vulkan instance. Error: ");
         logger.err(vk::to_string(result).c_str());
-        // vk::to_string();
         throw std::runtime_error("failed to create instance!");
     }
 
