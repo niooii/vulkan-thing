@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.6.0)
 project(vulkan_stuff VERSION 0.1.0 LANGUAGES C CXX)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if (WIN32) 
     set(SDL2_DIR "E:\\clibs\\SDL2-2.28.5\\cmake")
