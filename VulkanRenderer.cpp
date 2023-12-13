@@ -1,55 +1,54 @@
 #include "VulkanRenderer.h"
 
-// for tesitng
-#include <iostream>
+using std::vector;
+using globals::logger;
 
 VulkanRenderer::VulkanRenderer() = default;
+VulkanRenderer::~VulkanRenderer() = default;
 
-int VulkanRenderer::init(SDL_Window* windowTarget) {
-    using vk::StructureType;
-    using vk::Result;
-    using std::vector;
+vk::Result VulkanRenderer::init(SDL_Window* windowTarget) {
 
     window = windowTarget;
 
+    createInstance();
+    
+    return vk::Result::eSuccess;
+}
+
+void VulkanRenderer::createInstance() {
+    using vk::StructureType;
+    using vk::Result;
+
     vk::ApplicationInfo appInfo{};
     appInfo.sType = vk::StructureType::eApplicationInfo;
-    appInfo.pApplicationName = "Hello Triangle";
-    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.pApplicationName = "Vulkan app woo";
+    appInfo.applicationVersion = vk::makeApiVersion(1, 0, 0, 0);
     appInfo.pEngineName = "No Engine";
-    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.engineVersion = vk::makeApiVersion(1, 0, 0, 0);
     appInfo.apiVersion = VK_API_VERSION_1_0;
 
     vk::InstanceCreateInfo createInfo{};
     createInfo.sType = StructureType::eInstanceCreateInfo;
     createInfo.pApplicationInfo = &appInfo;
-    
+
     unsigned int extensionCount;
     vector<const char*> extensionNames{};
 
     SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, nullptr);
     SDL_Vulkan_GetInstanceExtensions(window, &extensionCount, extensionNames.data());
-    
-    for(const char* n : extensionNames) {
-        std::cout << n << '\n';
-    }
 
-    std::cout << extensionNames.data() << '\n';
-
-    // if(status == SDL_FALSE) {
-    //     std::cout << "the fuck" << '\n';
-    // }
+//    std::cout << extensionNames.data() << '\n';
 
     createInfo.ppEnabledExtensionNames = extensionNames.data();
     createInfo.enabledExtensionCount = extensionNames.size();
 
-    vk::Instance instance;
     vk::Result result;
     if ((result = vk::createInstance(&createInfo, nullptr, &instance)) != Result::eSuccess) {
-        std::cout << vk::to_string(result) << '\n';
+        logger.err("Failed to create vulkan instance. Error: ");
+        logger.err(vk::to_string(result).c_str());
         // vk::to_string();
         throw std::runtime_error("failed to create instance!");
     }
-    
-    return 0;
+
+    logger.debug("Vulkan instance successfully initialized.");
 }

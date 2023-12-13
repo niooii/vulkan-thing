@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.6.0)
 project(vulkan_stuff VERSION 0.1.0 LANGUAGES C CXX)
 
+set (CMAKE_CXX_STANDARD 23)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if (WIN32) 
@@ -15,7 +17,11 @@ main.cpp
 Window.cpp
 Window.h
 VulkanRenderer.cpp
-VulkanRenderer.h)
+VulkanRenderer.h
+        Logger.h
+        Logger.cpp
+        Globals.h
+        Globals.cpp)
 
 if (WIN32) 
     target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS})   

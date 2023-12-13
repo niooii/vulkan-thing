@@ -23,7 +23,7 @@ void Window::create(int w, int h, const char *n) {
   // make it so the screen doesn't flicker on KDE
   SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 
-  uint32_t WindowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+  uint32_t WindowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_VULKAN;
   window = SDL_CreateWindow("OpenGL Test", 0, 0, w, h, WindowFlags);
   context = SDL_GL_CreateContext(window);
 }
