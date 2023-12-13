@@ -12,6 +12,14 @@ public:
     void warn(const char* str);
     void err(const char* str);
 
+    void debug(string& str);
+    void warn(string& str);
+    void err(string& str);
+
+    void debug(string str);
+    void warn(string str);
+    void err(string str);
+
     void activateDebug();
     void activateWarn();
     void activateErr();

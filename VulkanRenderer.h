@@ -22,4 +22,5 @@ private:
 
   // vulkan functions
   void createInstance();
+  bool extensionsAreSupported(std::vector<const char*>* extensionNames);
 };

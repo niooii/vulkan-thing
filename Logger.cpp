@@ -27,6 +27,54 @@ void Logger::err(const char* str) {
     cerr << formatMessage("ERROR", str);
 }
 
+void Logger::debug(string& str) {
+    if(!debugActive) {
+        return;
+    }
+
+    cout << formatMessage("DEBUG", str.c_str());
+}
+
+void Logger::warn(string& str) {
+    if(!warnActive) {
+        return;
+    }
+
+    cerr << formatMessage("WARN", str.c_str());
+}
+
+void Logger::err(string& str) {
+    if(!errActive) {
+        return;
+    }
+
+    cerr << formatMessage("ERROR", str.c_str());
+}
+
+void Logger::debug(string str) {
+    if(!debugActive) {
+        return;
+    }
+
+    cout << formatMessage("DEBUG", str.c_str());
+}
+
+void Logger::warn(string str) {
+    if(!warnActive) {
+        return;
+    }
+
+    cerr << formatMessage("WARN", str.c_str());
+}
+
+void Logger::err(string str) {
+    if(!errActive) {
+        return;
+    }
+
+    cerr << formatMessage("ERROR", str.c_str());
+}
+
 string Logger::timestamp() {
     using std::time_t, std::tm, std::to_string, std::format;
 
