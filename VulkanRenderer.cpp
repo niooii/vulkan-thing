@@ -63,6 +63,10 @@ void VulkanRenderer::createInstance() {
     for(auto& device : devices) {
         logger.debug("there is a device. ");
     }
+
+    if(devices.empty()) {
+        logger.warn("There is no device available.");
+    }
 }
 
 bool VulkanRenderer::extensionsAreSupported(vector<const char*>* extensionNames) {
