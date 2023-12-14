@@ -80,6 +80,8 @@ void VulkanRenderer::getPhysicalDevice() {
     for(auto& device : devices) {
         std::cout << device.getProperties().deviceName << '\n';
     }
+
+//    MainDevice mainDevice  =
 }
 
 bool VulkanRenderer::extensionsAreSupported(vector<const char*>* extensionNames) {
