@@ -6,6 +6,8 @@
 #include <SDL_video.h>
 // #include "Window.h"
 #include "Globals.h"
+#include "Utils.h"
+#include "vulkan/vulkan_handles.hpp"
 
 using namespace vk;
 
@@ -21,15 +23,21 @@ private:
 
   // vulkan components
   Instance instance;
-  struct MainDevice {
+  struct {
     PhysicalDevice physical;
     Device logical;
-  };
+  } mainDevice;
 
   // vulkan functions
   void createInstance();
 
-  void getPhysicalDevice();
-
+  void initDevice();
+  
+  // validation funcrions
+  // check if device is suitable for use
+  bool validateDevice(PhysicalDevice& device);
+  
   bool extensionsAreSupported(std::vector<const char*>* extensionNames);
+
+  QueueFamilyIndices getQueueFamilies(PhysicalDevice device);
 };
