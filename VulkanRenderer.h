@@ -1,4 +1,5 @@
 #include <vector>
+#include <set>
 #include <vulkan/vulkan.hpp>
 
 #include <SDL.h>
@@ -28,16 +29,32 @@ private:
     Device logical;
   } mainDevice;
 
+  SurfaceKHR surface;
+  Queue graphicsQueue;
+  Queue presentationQueue;
+
   // vulkan functions
   void createInstance();
-
   void initDevice();
+  void createSurface();
+  void createSwapchain();
   
   // validation funcrions
   // check if device is suitable for use
-  bool validateDevice(PhysicalDevice& device);
+  bool validateDevice(PhysicalDevice device);
   
-  bool extensionsAreSupported(std::vector<const char*>* extensionNames);
+  bool instanceExtensionSupport(std::vector<const char*> *extensionNames);
+  // check if device supports swap chain
+  bool deviceExtensionSupport(PhysicalDevice device);
 
   QueueFamilyIndices getQueueFamilies(PhysicalDevice device);
+  SwapChainDetails getSwapChainDetails(PhysicalDevice device);
+
+  // choose swapchain settings
+  SurfaceFormatKHR chooseBestSurfaceFormat(const vector<SurfaceFormatKHR>& formats);
+  PresentModeKHR chooseBestPresentationMode(const vector<vk::PresentModeKHR> &presentModes);
+  Extent2D chooseSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities);
+
+  // cleanup resources
+  void cleanup();
 };

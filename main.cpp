@@ -26,10 +26,6 @@ const int W_HEIGHT = 600;
 
 #undef main
 
-void createInstance(SDL_Window* window) {
-    
-}
-
 int main() {
     std::cout << "hi" << '\n';
 
@@ -43,6 +39,10 @@ int main() {
     window.create();
 
     vkRenderer.init(window.raw());
+
+    while(window.shouldRun()) {
+        window.pollEvents();
+    }
 
     return 0;
 }

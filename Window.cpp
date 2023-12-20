@@ -17,7 +17,7 @@ void Window::create(int w, int h, const char *n) {
   SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 
   uint32_t WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_VULKAN;
-  window = SDL_CreateWindow("OpenGL Test", 0, 0, w, h, WindowFlags);
+  window = SDL_CreateWindow("OpenGL Test", 200, 200, w, h, WindowFlags);
 }
 
 void Window::close() {
