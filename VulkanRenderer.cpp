@@ -4,6 +4,9 @@
 #include "vulkan/vulkan_enums.hpp"
 #include "vulkan/vulkan_handles.hpp"
 #include "vulkan/vulkan_structs.hpp"
+#include <SDL_video.h>
+#include <cstdint>
+#include <limits>
 #include <vector>
 #include <algorithm>
 
@@ -287,7 +290,9 @@ QueueFamilyIndices VulkanRenderer::getQueueFamilies(PhysicalDevice device) {
 void VulkanRenderer::createSwapchain() {
     SwapChainDetails scDetails = getSwapChainDetails(mainDevice.physical);
 
-    
+    SurfaceFormatKHR format = getOptimalSurfaceFormat(scDetails.formats);
+    PresentModeKHR presentMode = getOptimalPresentationMode(scDetails.presentationModes);
+    Extent2D extent = getSwapExtent(scDetails.surfaceCapabilities);
 }
 
 SwapChainDetails VulkanRenderer::getSwapChainDetails(PhysicalDevice device) {
@@ -311,7 +316,7 @@ SwapChainDetails VulkanRenderer::getSwapChainDetails(PhysicalDevice device) {
     return details;
 }
 
-SurfaceFormatKHR VulkanRenderer::chooseBestSurfaceFormat(const vector<SurfaceFormatKHR> &formats) {
+SurfaceFormatKHR VulkanRenderer::getOptimalSurfaceFormat(const vector<SurfaceFormatKHR> &formats) {
     // this means all formats are supported.
     if (formats.size() == 1 && formats[0].format == vk::Format::eUndefined) {
         // normally the best formats to use
@@ -330,7 +335,7 @@ SurfaceFormatKHR VulkanRenderer::chooseBestSurfaceFormat(const vector<SurfaceFor
     return formats[0];
 }
 
-PresentModeKHR VulkanRenderer::chooseBestPresentationMode(const vector<vk::PresentModeKHR> &presentModes) {
+PresentModeKHR VulkanRenderer::getOptimalPresentationMode(const vector<vk::PresentModeKHR> &presentModes) {
 
     for (const auto &mode : presentModes) {
         // find the ones that are regarded as optimal
@@ -343,7 +348,26 @@ PresentModeKHR VulkanRenderer::chooseBestPresentationMode(const vector<vk::Prese
     return vk::PresentModeKHR::eFifo;
 }
 
-Extent2D VulkanRenderer::chooseSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities) {
+Extent2D VulkanRenderer::getSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities) {
+    Extent2D currentExtent = surfaceCapabilities.currentExtent;
+    
+    // vulkan docs says if its equal to the max of uint32, it's of variable size.
+    if(currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+        return currentExtent;
+    }
+
+    int w, h;
+    SDL_GetWindowSize(window, &w, &h);
+    Extent2D extent = Extent2D{static_cast<uint32_t>(w), static_cast<uint32_t>(h)};
+
+    // clamp based on max and min value
+    extent.width = std::min(extent.width, surfaceCapabilities.maxImageExtent.width);
+    extent.height = std::min(extent.height, surfaceCapabilities.maxImageExtent.height);
+
+    extent.width = std::max(extent.width, surfaceCapabilities.minImageExtent.width);
+    extent.height = std::max(extent.height, surfaceCapabilities.minImageExtent.height);
+
+    return extent;
 
 }
 

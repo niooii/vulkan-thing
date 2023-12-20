@@ -51,9 +51,9 @@ private:
   SwapChainDetails getSwapChainDetails(PhysicalDevice device);
 
   // choose swapchain settings
-  SurfaceFormatKHR chooseBestSurfaceFormat(const vector<SurfaceFormatKHR>& formats);
-  PresentModeKHR chooseBestPresentationMode(const vector<vk::PresentModeKHR> &presentModes);
-  Extent2D chooseSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities);
+  SurfaceFormatKHR getOptimalSurfaceFormat(const vector<SurfaceFormatKHR>& formats);
+  PresentModeKHR getOptimalPresentationMode(const vector<vk::PresentModeKHR> &presentModes);
+  Extent2D getSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities);
 
   // cleanup resources
   void cleanup();
