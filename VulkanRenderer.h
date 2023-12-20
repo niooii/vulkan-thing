@@ -33,6 +33,8 @@ private:
   Queue graphicsQueue;
   Queue presentationQueue;
 
+  SwapchainKHR swapchain;
+
   // vulkan functions
   void createInstance();
   void initDevice();

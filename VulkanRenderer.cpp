@@ -1,12 +1,15 @@
 #include "VulkanRenderer.h"
+#include "Globals.h"
 #include "Utils.h"
 #include "vulkan/vulkan.hpp"
 #include "vulkan/vulkan_enums.hpp"
 #include "vulkan/vulkan_handles.hpp"
 #include "vulkan/vulkan_structs.hpp"
+#include "vulkan/vulkan_to_string.hpp"
 #include <SDL_video.h>
 #include <cstdint>
 #include <limits>
+#include <stdexcept>
 #include <vector>
 #include <algorithm>
 
@@ -28,6 +31,7 @@ Result VulkanRenderer::init(SDL_Window* windowTarget) {
     createInstance();
     createSurface();
     initDevice();
+    createSwapchain();
 
     
     return Result::eSuccess;
@@ -293,6 +297,28 @@ void VulkanRenderer::createSwapchain() {
     SurfaceFormatKHR format = getOptimalSurfaceFormat(scDetails.formats);
     PresentModeKHR presentMode = getOptimalPresentationMode(scDetails.presentationModes);
     Extent2D extent = getSwapExtent(scDetails.surfaceCapabilities);
+
+    SwapchainCreateInfoKHR createInfo{};
+
+    createInfo.presentMode = presentMode;
+    createInfo.imageExtent = extent;
+    createInfo.imageFormat = format.format;
+    createInfo.imageColorSpace = format.colorSpace;
+    // add queue indices adn stuff oops i forgot
+
+    SwapchainKHR swapchain{};
+                                                                                                                                
+    Result res = mainDevice.logical.createSwapchainKHR(&createInfo, nullptr, &swapchain);
+
+    if(res != Result::eSuccess) {
+        logger.err("Failed to create swapchain: ");
+        logger.err(vk::to_string(res));
+        throw std::runtime_error("GG");
+    }
+
+    this->swapchain = swapchain;
+
+    logger.debug("Create swapchain");
 }
 
 SwapChainDetails VulkanRenderer::getSwapChainDetails(PhysicalDevice device) {
