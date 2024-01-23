@@ -13,24 +13,24 @@ class Window
 {
 public:
 
-    void create();
-    void create(int w, int h, const char* n);
-    void close();
-    bool shouldRun();
+    Window(const char *name, int x, int y, int w, int h);
+    ~Window();
 
-    void clear();
-    void clear(float r, float g, float b, float a);
+    bool RequestedQuit();
 
-    //Change in time from previous frame to current in seconds.
-    float deltaTime();
-    //Elapsed time since SDL_Library initialization in seconds.
-    float elapsedTime();
+    void Clear();
+    void Clear(float r, float g, float b, float a);
 
-    void pollEvents();
+    // Change in time from previous frame to current in seconds.
+    float DeltaTime();
+    // Elapsed time since SDL_Library initialization in seconds.
+    float ElapsedTime();
 
-    SDL_Window* raw();
+    void PollEvents();
 
-    //set useful callback functions
+    SDL_Window* Raw();
+
+    //TODO! replace with event architecture thing.
 
     /* PARAMS:
      * int x: abs
@@ -62,22 +62,24 @@ public:
 
 private:
 
-    uint16_t width, height;
-    const char* name;
-    SDL_Window* window;
-    bool running{true};
-    SDL_Event e;
+    //WINDOW PROPERTIES & INTERNALS
+    uint16_t width_;
+    uint16_t height_;
+    const char* window_name_;
+    SDL_Window* sdl_window_;
+    SDL_Event event_;
+
+    //OTHER ATTRIBUTES
+    bool requested_quit_{false};
+    Uint64 now_, last_;
+    float deltatime_;
 
     //CALLBACK DECLARATIONS
-    void (*OnMouseMotion)(int x, int y, int xrel, int yrel){nullptr};
-    void (*OnMouseButtonDown)(int x, int y, Uint8 button){nullptr};
-    void (*OnMouseButtonUp)(int x, int y, Uint8 button){nullptr};
-    void (*OnKeyDown)(SDL_Keycode key, Uint16 modifier){ nullptr };
-    void (*OnKeyUp)(SDL_Keycode key, Uint16 modifier){ nullptr };
+    void (*on_mouse_motion_)(int x, int y, int xrel, int yrel){nullptr};
+    void (*on_mousebutton_down_)(int x, int y, Uint8 button){nullptr};
+    void (*on_mousebutton_up)(int x, int y, Uint8 button){nullptr};
+    void (*on_keydown_)(SDL_Keycode key, Uint16 modifier){nullptr };
+    void (*on_keyup_)(SDL_Keycode key, Uint16 modifier){nullptr };
 
-    //temp stuff for testing
 
-    //for deltaTime
-    Uint64 NOW, LAST;
-    float dt;
 };
