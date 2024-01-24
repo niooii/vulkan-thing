@@ -25,7 +25,9 @@ main.cpp
         Engine/VulkanRenderer/Device.h
         Engine/VulkanRenderer/Device.h
         Engine/VulkanRenderer/Instance.cpp
-        Engine/VulkanRenderer/Instance.h)
+        Engine/VulkanRenderer/Instance.h
+        Engine/VulkanRenderer/Swapchain.cpp
+        Engine/VulkanRenderer/Swapchain.h)
 
 if (WIN32) 
     target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS})   

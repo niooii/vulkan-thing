@@ -51,7 +51,7 @@ namespace Engine::Vulkan {
         }
     }
 
-    Instance::~Instance() {
+    void Instance::Destroy() {
         vkDestroyInstance(vk_instance_, nullptr);
     }
 

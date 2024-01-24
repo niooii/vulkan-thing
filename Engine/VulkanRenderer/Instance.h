@@ -12,7 +12,7 @@ namespace Engine::Vulkan {
     class Instance {
     public:
         Instance(const char* application_name, const char* engine_name, SDL_Window* window_ptr, bool validation_layers_enabled);
-        ~Instance();
+        void Destroy();
 
     private:
         VkInstance vk_instance_;

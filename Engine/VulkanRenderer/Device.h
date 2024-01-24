@@ -5,11 +5,15 @@ namespace Engine::Vulkan {
 
     class Device {
     public:
+        // When creating devices, chooses the best device based off conditions that I will specify later.
         Device();
-        ~Device();
+        void Destroy();
+
+        // Accessors
+        VkDevice device();
     private:
-        VkPhysicalDevice physical_;
-        VkDevice logical_;
+        VkPhysicalDevice vk_physical_;
+        VkDevice vk_logical_;
     };
 
 }
