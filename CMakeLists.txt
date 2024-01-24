@@ -37,10 +37,19 @@ else()
     target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS}/SDL2)
 endif()
 
+message(${Vulkan_INCLUDE_DIRS})
+
 target_include_directories(vulkan_stuff PRIVATE ${Vulkan_INCLUDE_DIRS})
 #target_include_directories(vulkan_stuff PRIVATE ${PROJECT_SOURCE_DIR}/Engine)
 
-target_precompile_headers(vulkan_stuff PUBLIC ${Vulkan_INCLUDE_DIRS}/vulkan/vulkan.hpp)
+target_precompile_headers(vulkan_stuff PUBLIC ${Vulkan_INCLUDE_DIRS}/vulkan/vulkan.h)
+
+# env
+if (WIN32)
+    set(ENV{VK_LAYER_PATH} "C:\\VulkanSDK\\1.3.275.0\\Bin")
+    message("$ENV{VK_LAYER_PATH} thing yes")
+endif()
+
 
 target_link_libraries(vulkan_stuff ${SDL2_LIBRARIES})
 target_link_libraries(vulkan_stuff ${Vulkan_LIBRARIES})

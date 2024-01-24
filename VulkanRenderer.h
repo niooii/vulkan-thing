@@ -23,7 +23,7 @@
 //  SDL_Window *sdl_window_;
 //
 //  // vulkan components
-//  Instance instance;
+//  Instance instance_;
 //  struct {
 //    PhysicalDevice physical;
 //    Device logical;

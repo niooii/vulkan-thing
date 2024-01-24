@@ -68,16 +68,16 @@
 ////    }
 //
 //    Result result;
-//    if ((result = ::createInstance(&createInfo, nullptr, &instance)) != Result::eSuccess) {
-//        logger.err("Failed to create vulkan instance. Error: ");
+//    if ((result = ::createInstance(&createInfo, nullptr, &instance_)) != Result::eSuccess) {
+//        logger.err("Failed to create vulkan instance_. Error: ");
 //        logger.err(vk::to_string(result).c_str());
-//        throw std::runtime_error("failed to create instance!");
+//        throw std::runtime_error("failed to create instance_!");
 //    }
 //
-//    logger.debug("Vulkan instance successfully initialized.");
+//    logger.debug("Vulkan instance_ successfully initialized.");
 //
 //    // testing some device stuff
-//    auto devices = instance.enumeratePhysicalDevices();
+//    auto devices = instance_.enumeratePhysicalDevices();
 //
 //    for(auto& device : devices) {
 //        logger.debug("there is a device. ");
@@ -91,7 +91,7 @@
 //void VulkanRenderer::initDevice() {
 //
 //    unsigned int count;
-//    instance.enumeratePhysicalDevices(&count, nullptr);
+//    instance_.enumeratePhysicalDevices(&count, nullptr);
 //
 //    if(count == 0) {
 //        logger.err("No vulkan supported devices found.");
@@ -99,7 +99,7 @@
 //    }
 //
 //    vector<PhysicalDevice> devices{count};
-//    instance.enumeratePhysicalDevices(&count, devices.data());
+//    instance_.enumeratePhysicalDevices(&count, devices.data());
 //    bool deviceFound{false};
 //    // find first suitable device
 //    for(auto& device : devices) {
@@ -175,7 +175,7 @@
 //void VulkanRenderer::createSurface() {
 //    VkSurfaceKHR surfaceKhr;
 //
-//    SDL_bool res = SDL_Vulkan_CreateSurface(sdl_window_, instance, &surfaceKhr);
+//    SDL_bool res = SDL_Vulkan_CreateSurface(sdl_window_, instance_, &surfaceKhr);
 //
 //    if(res == SDL_FALSE) {
 //        throw std::runtime_error("SURFACE FAILED");
@@ -429,10 +429,10 @@
 //}
 //
 //void VulkanRenderer::cleanup() {
-//    vkDestroySurfaceKHR(instance, surface, nullptr);
+//    vkDestroySurfaceKHR(instance_, surface, nullptr);
 //    vkDestroyDevice(mainDevice.logical, nullptr);
 //
-//    vkDestroyInstance(instance, nullptr);
+//    vkDestroyInstance(instance_, nullptr);
 //}
 //
 //

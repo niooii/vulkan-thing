@@ -1,5 +1,13 @@
 #include "Device.h"
 
-namespace VulkanRenderer {
+namespace Engine::Vulkan {
+
+    Device::Device() {
+
+    }
+
+    Device::~Device() {
+
+    }
 
 }
