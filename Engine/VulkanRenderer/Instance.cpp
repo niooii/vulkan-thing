@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace Engine::Vulkan {
-    using std::vector;
+
     Instance::Instance(const char* application_name, const char* engine_name, SDL_Window* window_ptr, bool validation_layers_enabled) {
         VkApplicationInfo app_info{};
         app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -20,14 +20,14 @@ namespace Engine::Vulkan {
         // sdl extension query stuff
         uint32_t num_extensions;
         SDL_Vulkan_GetInstanceExtensions(window_ptr, &num_extensions, nullptr);
-        vector<const char*> extension_names{num_extensions};
+        std::vector<const char*> extension_names{num_extensions};
         SDL_Vulkan_GetInstanceExtensions(window_ptr, &num_extensions, extension_names.data());
 
         create_info.enabledExtensionCount = num_extensions;
         create_info.ppEnabledExtensionNames = extension_names.data();
 
         // handle validation layers
-        vector<const char*> validation_layers = {
+        std::vector<const char*> validation_layers = {
                 "VK_LAYER_KHRONOS_validation"
         };
         if(validation_layers_enabled) {
@@ -56,28 +56,29 @@ namespace Engine::Vulkan {
     }
 
     // Internal checks
-    bool Instance::ValidationLayersSupported(vector<const char*> &validation_layers) {
+    bool Instance::ValidationLayersSupported(std::vector<const char*> &validation_layers) {
         uint32_t num_layers;
         vkEnumerateInstanceLayerProperties(&num_layers, nullptr);
 
-        std::vector<VkLayerProperties> availableLayers{num_layers};
-        vkEnumerateInstanceLayerProperties(&num_layers, availableLayers.data());
+        std::vector<VkLayerProperties> available_layers{num_layers};
+        vkEnumerateInstanceLayerProperties(&num_layers, available_layers.data());
 
-        for (const char* layerName : validation_layers) {
-            bool layerFound = false;
+        for (const char* layer_name : validation_layers) {
+            bool found_layer = false;
 
-            for (const auto& layerProperties : availableLayers) {
-                if (strcmp(layerName, layerProperties.layerName) == 0) {
-                    layerFound = true;
+            for (const auto& layer_properties : available_layers) {
+                if (strcmp(layer_name, layer_properties.layerName) == 0) {
+                    found_layer = true;
                     break;
                 }
             }
 
-            if (!layerFound) {
+            if (!found_layer) {
                 return false;
             }
         }
 
         return true;
     }
+
 }

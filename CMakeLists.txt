@@ -18,10 +18,6 @@ main.cpp
         Engine/Window.h
         VulkanRenderer.cpp
         VulkanRenderer.h
-        Logger.h
-        Logger.cpp
-        Globals.h
-        Globals.cpp
         Engine/VulkanRenderer/Renderer.cpp
         Engine/VulkanRenderer/Renderer.h
         Engine/VulkanRenderer/Renderer.h
