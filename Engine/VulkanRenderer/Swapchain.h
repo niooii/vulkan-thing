@@ -7,7 +7,7 @@ namespace Engine::Vulkan {
 
     class Swapchain {
     public:
-        Swapchain(Device &device);
+        explicit Swapchain(Device &device);
         void Destroy();
     private:
         VkSwapchainKHR vk_swapchain_;
