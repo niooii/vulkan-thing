@@ -19,7 +19,7 @@ namespace Engine::Vulkan {
     private:
         VkInstance vk_instance_;
 
-        // Internal checks
+        // Internal
         bool ValidationLayersSupported(std::vector<const char*> &validation_layers);
     };
 

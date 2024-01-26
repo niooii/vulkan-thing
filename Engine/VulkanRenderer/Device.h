@@ -35,6 +35,8 @@ namespace Engine::Vulkan {
         void PickPhysicalDevice();
         void InitLogicalDevice();
 
+        std::vector<VkDeviceQueueCreateInfo> GetQueueCreateInfos(QueueFamilyIndicies &indices);
+
         bool DeviceSuitable(VkPhysicalDevice physical_device);
         QueueFamilyIndicies FindQueueFamilies(VkPhysicalDevice physical_device);
 

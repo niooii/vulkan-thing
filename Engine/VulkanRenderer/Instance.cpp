@@ -34,7 +34,7 @@ namespace Engine::Vulkan {
 
             if(!ValidationLayersSupported(validation_layers)) {
                 // TODO! log
-                throw std::runtime_error(std::string("Failed to create instance_! Requested missing validation layers."));
+                throw std::runtime_error(std::string("Failed to create instance! Requested missing validation layers."));
             }
 
             create_info.enabledLayerCount = static_cast<uint32_t>(validation_layers.size());
@@ -47,7 +47,7 @@ namespace Engine::Vulkan {
 
         if (result != VK_SUCCESS) {
             // TODO! log
-            throw std::runtime_error(std::string("Failed to create instance_! Error: ") + string_VkResult(result));
+            throw std::runtime_error(std::string("Failed to create instance! Error: ") + string_VkResult(result));
         }
     }
 
@@ -59,7 +59,7 @@ namespace Engine::Vulkan {
         return vk_instance_;
     }
 
-    // Internal checks
+    // Internal
     bool Instance::ValidationLayersSupported(std::vector<const char*> &validation_layers) {
         uint32_t num_layers;
         vkEnumerateInstanceLayerProperties(&num_layers, nullptr);

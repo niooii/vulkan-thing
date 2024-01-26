@@ -47,6 +47,39 @@ namespace Engine::Vulkan {
 
     void Device::InitLogicalDevice() {
         // TODO!
+        VkDeviceCreateInfo dev_create_info{};
+        dev_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+
+        std::vector<VkDeviceQueueCreateInfo> queue_create_infos = GetQueueCreateInfos(queue_family_indices);
+
+        dev_create_info.pQueueCreateInfos = queue_create_infos.data();
+        dev_create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());
+
+        // empty for now
+        VkPhysicalDeviceFeatures dev_features{};
+
+        dev_create_info.pEnabledFeatures = &dev_features;
+
+        VkResult result = vkCreateDevice(vk_physical_, &dev_create_info, nullptr, &vk_logical_);
+
+        if(result != VK_SUCCESS) {
+            // TODO! log
+            throw std::runtime_error(std::string("Failed to create device! Error: ") + string_VkResult(result));
+        }
+    }
+
+    std::vector<VkDeviceQueueCreateInfo> Device::GetQueueCreateInfos(QueueFamilyIndicies &indices) {
+        VkDeviceQueueCreateInfo graphics_create_info{};
+        graphics_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+        graphics_create_info.queueFamilyIndex = indices.graphics_family.value();
+        graphics_create_info.queueCount = 1;
+
+        float q_prio = 1.0f;
+        graphics_create_info.pQueuePriorities = &q_prio;
+
+        return std::vector<VkDeviceQueueCreateInfo> {
+            graphics_create_info
+        };
     }
 
     // Internal
