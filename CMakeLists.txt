@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6.0)
+cmake_minimum_required(VERSION 3.14)
 project(vulkan_stuff VERSION 0.1.0 LANGUAGES C CXX)
 
 set (CMAKE_CXX_STANDARD 23)
@@ -7,12 +7,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if (WIN32) 
     set(SDL2_DIR "E:\\SDL2\\SDL2-2.28.5\\cmake")
-    set(spdlog_DIR "E:\\spdlog\\build")
-    set(spdlog_win_INCLUDE_DIRS "E:\\spdlog\\include\\spdlog")
+#    set(spdlog_DIR "E:\\spdlog\\build")
+#    set(spdlog_win_INCLUDE_DIRS "E:\\spdlog\\include\\spdlog")
 endif()
 
 find_package(SDL2 REQUIRED)
-find_package(spdlog REQUIRED)
+add_subdirectory(External/spdlog)
+find_package(spdlog)
 find_package(Vulkan REQUIRED)
 
 add_executable(vulkan_stuff 
@@ -64,8 +65,7 @@ if (WIN32)
     message("$ENV{VK_LAYER_PATH} thing yes")
 endif()
 
-target_link_libraries(vulkan_stuff PRIVATE ${SDL2_LIBRARIES})
-target_link_libraries(vulkan_stuff PRIVATE ${Vulkan_LIBRARIES})
-target_link_libraries(vulkan_stuff PUBLIC spdlog::spdlog)
+target_link_libraries(vulkan_stuff spdlog)
+target_link_libraries(vulkan_stuff ${SDL2_LIBRARIES})
+target_link_libraries(vulkan_stuff ${Vulkan_LIBRARIES})
 
-target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)
