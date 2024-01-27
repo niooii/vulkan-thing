@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if (WIN32) 
     set(SDL2_DIR "E:\\SDL2\\SDL2-2.28.5\\cmake")
     set(spdlog_DIR "E:\\spdlog\\build")
+    set(spdlog_win_INCLUDE_DIRS "E:\\spdlog\\include\\spdlog")
 endif()
 
 find_package(SDL2 REQUIRED)
@@ -36,6 +37,7 @@ main.cpp
 
 if (WIN32) 
     target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS})   
+    target_include_directories(vulkan_stuff PRIVATE ${spdlog_win_INCLUDE_DIRS})
 else()
     target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS}/SDL2)
 endif()
@@ -46,6 +48,8 @@ target_include_directories(vulkan_stuff PRIVATE ${Vulkan_INCLUDE_DIRS})
 #target_include_directories(vulkan_stuff PRIVATE ${PROJECT_SOURCE_DIR}/Engine)
 
 set(engine_dir "${PROJECT_SOURCE_DIR}/Engine/")
+target_include_directories(vulkan_stuff PRIVATE "${engine_dir}")
+# include the fmt stuff for spdlog holy shit
 target_include_directories(vulkan_stuff PRIVATE "${engine_dir}")
 
 message("${engine_dir}")
@@ -62,4 +66,6 @@ endif()
 
 target_link_libraries(vulkan_stuff PRIVATE ${SDL2_LIBRARIES})
 target_link_libraries(vulkan_stuff PRIVATE ${Vulkan_LIBRARIES})
-target_link_libraries(vulkan_stuff PRIVATE spdlog::spdlog)
+target_link_libraries(vulkan_stuff PUBLIC spdlog::spdlog)
+
+target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC SPDLOG_COMPILED_LIB SPDLOG_FMT_EXTERNAL)

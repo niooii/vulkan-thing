@@ -7,7 +7,7 @@
 #include "Swapchain.h"
 #include "Surface.h"
 #include <vector>
-#include <spdlog/spdlog.h>
+#include <spdlog.h>
 
 namespace Engine::Vulkan {
 
