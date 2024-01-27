@@ -4,7 +4,7 @@
 
 namespace Engine::Vulkan {
 
-    Instance::Instance(const char* application_name, const char* engine_name, SDL_Window* window_ptr, bool validation_layers_enabled) {
+    Instance::Instance(const char* application_name, const char* engine_name, Window &window, bool validation_layers_enabled) {
         VkApplicationInfo app_info{};
         app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
         app_info.pApplicationName = application_name;
@@ -19,9 +19,9 @@ namespace Engine::Vulkan {
 
         // sdl extension query stuff
         uint32_t num_extensions;
-        SDL_Vulkan_GetInstanceExtensions(window_ptr, &num_extensions, nullptr);
+        SDL_Vulkan_GetInstanceExtensions(window.sdl_window(), &num_extensions, nullptr);
         std::vector<const char*> extension_names{num_extensions};
-        SDL_Vulkan_GetInstanceExtensions(window_ptr, &num_extensions, extension_names.data());
+        SDL_Vulkan_GetInstanceExtensions(window.sdl_window(), &num_extensions, extension_names.data());
 
         create_info.enabledExtensionCount = num_extensions;
         create_info.ppEnabledExtensionNames = extension_names.data();

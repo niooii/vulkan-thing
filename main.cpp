@@ -22,7 +22,7 @@ int main() {
     Engine::Vulkan::Renderer renderer{
         "app name",
         "engine name",
-        window.raw_window(),
+        window,
         validation_layers_enabled
     };
 

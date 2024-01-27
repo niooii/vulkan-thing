@@ -3,7 +3,7 @@
 
 namespace Engine::Vulkan {
 
-    Device::Device(Instance &instance) : instance_(instance) {
+    Device::Device(Instance &instance, Surface &surface) : instance_(instance), surface_(surface) {
         PickPhysicalDevice();
         InitLogicalDevice();
     }
@@ -12,7 +12,7 @@ namespace Engine::Vulkan {
         vkDestroyDevice(vk_logical_, nullptr);
     }
 
-    VkDevice Device::device() {
+    VkDevice Device::vk_device() {
         return vk_logical_;
     }
 
@@ -21,7 +21,7 @@ namespace Engine::Vulkan {
         vkEnumeratePhysicalDevices(instance_.vk_instance(), &num_devices, nullptr);
 
         if(num_devices == 0) {
-            throw std::runtime_error("failed to find device.");
+            throw std::runtime_error("failed to find vk_device.");
         }
 
         std::vector<VkPhysicalDevice> physical_devices{num_devices};
@@ -36,12 +36,12 @@ namespace Engine::Vulkan {
         }
 
         if(!found_suitable_device) {
-            throw std::runtime_error("failed to find suitable device.");
+            throw std::runtime_error("failed to find suitable vk_device.");
         }
 
         queue_family_indices = FindQueueFamilies(vk_physical_);
         if(!queue_family_indices.all_exist()) {
-            throw std::runtime_error("device is missing required queue families.");
+            throw std::runtime_error("vk_device is missing required queue families.");
         }
     }
 
@@ -64,8 +64,11 @@ namespace Engine::Vulkan {
 
         if(result != VK_SUCCESS) {
             // TODO! log
-            throw std::runtime_error(std::string("Failed to create device! Error: ") + string_VkResult(result));
+            throw std::runtime_error(std::string("Failed to create vk_device! Error: ") + string_VkResult(result));
         }
+
+        vkGetDeviceQueue(vk_logical_, queue_family_indices.graphics_family.value(),
+                         0, &graphics_queue_handle);
     }
 
     std::vector<VkDeviceQueueCreateInfo> Device::GetQueueCreateInfos(QueueFamilyIndicies &indices) {
@@ -101,6 +104,14 @@ namespace Engine::Vulkan {
         for (const auto& queueFamily : queue_families) {
             if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
                 indices.graphics_family = i;
+            }
+
+            // no early return or else because the queues can overlap
+            VkBool32 supports_presentation = false;
+            vkGetPhysicalDeviceSurfaceSupportKHR(vk_physical_, i, surface_.vk_surface(), &supports_presentation);
+
+            if (supports_presentation) {
+                indices.present_family = i;
             }
 
             i++;

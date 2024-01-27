@@ -2,12 +2,12 @@
 
 namespace Engine::Vulkan {
 
-    Swapchain::Swapchain(Device &device) : device_(device) {
+    Swapchain::Swapchain(Device &device, Instance &instance, Window &window) : device_(device), instance_(instance) {
 
     }
 
     void Swapchain::Destroy() {
-        vkDestroySwapchainKHR(device_.device(), vk_swapchain_, nullptr);
+        vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
     }
 
 }

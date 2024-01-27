@@ -6,12 +6,13 @@
 #include <vulkan/vk_enum_string_helper.h>
 
 #include <vector>
+#include "../Window.h"
 
 namespace Engine::Vulkan {
 
     class Instance {
     public:
-        Instance(const char* application_name, const char* engine_name, SDL_Window* window_ptr, bool validation_layers_enabled);
+        Instance(const char* application_name, const char* engine_name, Window &window, bool validation_layers_enabled);
         void Destroy();
 
         VkInstance vk_instance();

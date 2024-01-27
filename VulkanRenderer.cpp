@@ -76,15 +76,15 @@
 //
 //    logger.debug("Vulkan instance_ successfully initialized.");
 //
-//    // testing some device stuff
+//    // testing some vk_device stuff
 //    auto devices = instance_.enumeratePhysicalDevices();
 //
-//    for(auto& device : devices) {
-//        logger.debug("there is a device. ");
+//    for(auto& vk_device : devices) {
+//        logger.debug("there is a vk_device. ");
 //    }
 //
 //    if(devices.empty()) {
-//        logger.warn("There is no device available.");
+//        logger.warn("There is no vk_device available.");
 //    }
 //}
 //
@@ -95,29 +95,29 @@
 //
 //    if(count == 0) {
 //        logger.err("No vulkan supported devices found.");
-//        throw std::runtime_error("failed to find device.");
+//        throw std::runtime_error("failed to find vk_device.");
 //    }
 //
 //    vector<PhysicalDevice> devices{count};
 //    instance_.enumeratePhysicalDevices(&count, devices.data());
 //    bool deviceFound{false};
-//    // find first suitable device
-//    for(auto& device : devices) {
-//        // logger.debug(std::format("Found device: {}", device.getProperties().deviceName));
-//        if(validateDevice(device)) {
-//            mainDevice.physical = device;
+//    // find first suitable vk_device
+//    for(auto& vk_device : devices) {
+//        // logger.debug(std::format("Found device: {}", vk_device.getProperties().deviceName));
+//        if(validateDevice(vk_device)) {
+//            mainDevice.physical = vk_device;
 //            deviceFound = true;
 //            break;
 //        }
 //    }
 //
 //    if(!deviceFound) {
-//        logger.err("No suitable device found.");
+//        logger.err("No suitable vk_device found.");
 //        throw std::runtime_error("GG");
 //    }
 //
 //    if(devices.size() == 0) {
-//        logger.err("No vulkan-supported device found.");
+//        logger.err("No vulkan-supported vk_device found.");
 //        throw std::runtime_error("GG");
 //    }
 //
@@ -141,7 +141,7 @@
 //    }
 //
 //
-//    // create queues && then create logical device
+//    // create queues && then create logical vk_device
 //    DeviceCreateInfo dCreateInfo{};
 //    dCreateInfo.sType = StructureType::eDeviceCreateInfo;
 //
@@ -152,16 +152,16 @@
 //    dCreateInfo.enabledExtensionCount = deviceExtensions.size();
 //    dCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
 //
-//    // physhical device features logical will use
+//    // physhical vk_device features logical will use
 //    PhysicalDeviceFeatures pFeatures{};
 //
 //    dCreateInfo.pEnabledFeatures = &pFeatures;
 //
-//    // create the device
+//    // create the vk_device
 //    Result res = mainDevice.physical.createDevice(&dCreateInfo, nullptr, &mainDevice.logical);
 //
 //    if(res != Result::eSuccess) {
-//        logger.err("failed to create logical device");
+//        logger.err("failed to create logical vk_device");
 //        logger.err(vk::to_string(res).c_str());
 //        throw std::runtime_error("NO DEVICE FOR YOU");
 //    }
@@ -184,14 +184,14 @@
 //    surface = SurfaceKHR(surfaceKhr);
 //}
 //
-//bool VulkanRenderer::validateDevice(PhysicalDevice device) {
-//    PhysicalDeviceProperties properties = device.getProperties();
-//    PhysicalDeviceFeatures features = device.getFeatures();
+//bool VulkanRenderer::validateDevice(PhysicalDevice vk_device) {
+//    PhysicalDeviceProperties properties = vk_device.getProperties();
+//    PhysicalDeviceFeatures features = vk_device.getFeatures();
 //
-//    QueueFamilyIndices indices = getQueueFamilies(device);
-//    bool extensionsSupported = deviceExtensionSupport(device);
+//    QueueFamilyIndices indices = getQueueFamilies(vk_device);
+//    bool extensionsSupported = deviceExtensionSupport(vk_device);
 //
-//    SwapChainDetails swapChainDetails = getSwapChainDetails(device);
+//    SwapChainDetails swapChainDetails = getSwapChainDetails(vk_device);
 //    bool swapChainValid{!swapChainDetails.formats.empty() && !swapChainDetails.presentationModes.empty()};
 //
 //    return indices.isValid() && extensionsSupported && swapChainValid;
@@ -224,17 +224,17 @@
 //    return allSupported;
 //}
 //
-//bool VulkanRenderer::deviceExtensionSupport(PhysicalDevice device) {
+//bool VulkanRenderer::deviceExtensionSupport(PhysicalDevice vk_device) {
 //    unsigned int extensionCount;
 //
-//    device.enumerateDeviceExtensionProperties(nullptr, &extensionCount, nullptr);
+//    vk_device.enumerateDeviceExtensionProperties(nullptr, &extensionCount, nullptr);
 //
 //    if(extensionCount == 0) {
 //        return false;
 //    }
 //
 //    vector<ExtensionProperties> extensions{extensionCount};
-//    device.enumerateDeviceExtensionProperties(nullptr, &extensionCount, extensions.data());
+//    vk_device.enumerateDeviceExtensionProperties(nullptr, &extensionCount, extensions.data());
 //
 //    // check if the enumerated extensions contains the extensions
 //    // listed in the Utils.h deviceExtensions vec.
@@ -258,13 +258,13 @@
 //    return true;
 //}
 //
-//QueueFamilyIndices VulkanRenderer::getQueueFamilies(PhysicalDevice device) {
+//QueueFamilyIndices VulkanRenderer::getQueueFamilies(PhysicalDevice vk_device) {
 //    QueueFamilyIndices indices{};
 //
 //    unsigned int qFamilyCount;
-//    device.getQueueFamilyProperties(&qFamilyCount, nullptr);
+//    vk_device.getQueueFamilyProperties(&qFamilyCount, nullptr);
 //    vector<QueueFamilyProperties> qFamilyProperties{qFamilyCount};
-//    device.getQueueFamilyProperties(&qFamilyCount, qFamilyProperties.data());
+//    vk_device.getQueueFamilyProperties(&qFamilyCount, qFamilyProperties.data());
 //
 //    int i = 0;
 //    for(const auto& family : qFamilyProperties) {
@@ -276,7 +276,7 @@
 //
 //        // check if the q family supports presentation
 //        Bool32 presentationSupport = false;
-//        device.getSurfaceSupportKHR(i, surface, &presentationSupport);
+//        vk_device.getSurfaceSupportKHR(i, surface, &presentationSupport);
 //        if(family.queueCount > 0 && presentationSupport) {
 //            indices.presentationFamily = i;
 //        }
@@ -352,23 +352,23 @@
 //    logger.debug("Create swapchain");
 //}
 //
-//SwapChainDetails VulkanRenderer::getSwapChainDetails(PhysicalDevice device) {
+//SwapChainDetails VulkanRenderer::getSwapChainDetails(PhysicalDevice vk_device) {
 //
 //    SwapChainDetails details{};
 //    // -- GRAB CAPABILITIES --
-//    device.getSurfaceCapabilitiesKHR(surface, &details.surfaceCapabilities);
+//    vk_device.getSurfaceCapabilitiesKHR(surface, &details.surfaceCapabilities);
 //
 //    // -- GRAB FORMATS --
 //    unsigned int formatCount;
-//    device.getSurfaceFormatsKHR(surface, &formatCount, nullptr);
+//    vk_device.getSurfaceFormatsKHR(surface, &formatCount, nullptr);
 //    details.formats.resize(formatCount);
-//    device.getSurfaceFormatsKHR(surface, &formatCount, details.formats.data());
+//    vk_device.getSurfaceFormatsKHR(surface, &formatCount, details.formats.data());
 //
 //    // -- GRAB PRESENTATION MODES --
 //    unsigned int pmodeCount;
-//    device.getSurfacePresentModesKHR(surface, &pmodeCount, nullptr);
+//    vk_device.getSurfacePresentModesKHR(surface, &pmodeCount, nullptr);
 //    details.presentationModes.resize(pmodeCount);
-//    device.getSurfacePresentModesKHR(surface, &pmodeCount, details.presentationModes.data());
+//    vk_device.getSurfacePresentModesKHR(surface, &pmodeCount, details.presentationModes.data());
 //
 //    return details;
 //}

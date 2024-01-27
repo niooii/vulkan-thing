@@ -42,15 +42,15 @@
 //  void createSwapchain();
 //
 //  // validation funcrions
-//  // check if device is suitable for use
-//  bool validateDevice(PhysicalDevice device);
+//  // check if vk_device is suitable for use
+//  bool validateDevice(PhysicalDevice vk_device);
 //
 //  bool instanceExtensionSupport(std::vector<const char*> *extensionNames);
-//  // check if device supports swap chain
-//  bool deviceExtensionSupport(PhysicalDevice device);
+//  // check if vk_device supports swap chain
+//  bool deviceExtensionSupport(PhysicalDevice vk_device);
 //
-//  QueueFamilyIndices getQueueFamilies(PhysicalDevice device);
-//  SwapChainDetails getSwapChainDetails(PhysicalDevice device);
+//  QueueFamilyIndices getQueueFamilies(PhysicalDevice vk_device);
+//  SwapChainDetails getSwapChainDetails(PhysicalDevice vk_device);
 //
 //  // choose swapchain settings
 //  SurfaceFormatKHR getOptimalSurfaceFormat(const vector<SurfaceFormatKHR>& formats);

@@ -2,6 +2,7 @@
 #define VULKAN_STUFF_DEVICE_H
 
 #include "Instance.h"
+#include "Surface.h"
 
 #include <optional>
 
@@ -9,23 +10,29 @@ namespace Engine::Vulkan {
 
     struct QueueFamilyIndicies {
         std::optional<uint32_t> graphics_family;
+        std::optional<uint32_t> present_family;
 
         bool all_exist() {
-            return graphics_family.has_value();
+            return graphics_family.has_value() && present_family.has_value();
         }
     };
 
     class Device {
     public:
-        // When creating devices, chooses the best device based off conditions that I will specify later.
-        // TODO! this chooses the first found device for now. implement better choosing later.
-        explicit Device(Instance &instance);
+        // When creating devices, chooses the best vk_device based off conditions that I will specify later.
+        // TODO! this chooses the first found vk_device for now. implement better choosing later.
+        Device(Instance &instance, Surface &surface);
         void Destroy();
 
         // Accessors
-        VkDevice device();
+        VkDevice vk_device();
+
+        // TODO! temporary, figure out what to do with this later
+        VkQueue graphics_queue_handle;
+
     private:
         Instance &instance_;
+        Surface &surface_;
         QueueFamilyIndicies queue_family_indices;
 
         VkPhysicalDevice vk_physical_;

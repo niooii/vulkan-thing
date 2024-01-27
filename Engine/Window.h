@@ -27,7 +27,7 @@ namespace Engine {
 
         void PollEvents();
 
-        SDL_Window* raw_window();
+        SDL_Window* sdl_window();
 
         //TODO! replace with event architecture thing.
 
