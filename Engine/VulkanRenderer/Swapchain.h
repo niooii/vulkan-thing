@@ -4,6 +4,8 @@
 #include "Device.h"
 #include "../Window.h"
 
+#include <spdlog/spdlog.h>
+
 #include <stdexcept>
 
 namespace Engine::Vulkan {

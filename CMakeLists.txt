@@ -57,7 +57,7 @@ message("${engine_dir}")
 
 # no more diabolical compile times
 target_precompile_headers(vulkan_stuff PUBLIC ${Vulkan_INCLUDE_DIRS}/vulkan/vulkan.h)
-target_precompile_headers(vulkan_stuff PRIVATE ${spdlog_INCLUDE_DIRS})
+target_precompile_headers(vulkan_stuff PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/External/spdlog/include/spdlog/spdlog.h>)
 
 # env
 if (WIN32)

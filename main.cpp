@@ -1,7 +1,7 @@
 #include "Engine/Window.h"
 #include "Engine/VulkanRenderer/Renderer.h"
 
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 const int W_WIDTH = 900;
 const int W_HEIGHT = 600;
@@ -10,13 +10,17 @@ const int W_HEIGHT = 600;
 
 int main() {
 
+    spdlog::set_level(spdlog::level::debug);
+
     Engine::Window window{
         "A test window....",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        800,
-        800
+        W_WIDTH,
+        W_HEIGHT
     };
+
+    spdlog::debug("created window heheeaw");
 
     bool validation_layers_enabled = true;
     Engine::Vulkan::Renderer renderer{

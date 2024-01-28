@@ -1,13 +1,15 @@
 #ifndef VULKAN_STUFF_RENDERER_H
 #define VULKAN_STUFF_RENDERER_H
 
-#include <vulkan/vulkan.h>
 #include "Instance.h"
 #include "Device.h"
 #include "Swapchain.h"
 #include "Surface.h"
-#include <vector>
+
+#include <vulkan/vulkan.h>
 #include <spdlog/spdlog.h>
+
+#include <vector>
 
 namespace Engine::Vulkan {
 

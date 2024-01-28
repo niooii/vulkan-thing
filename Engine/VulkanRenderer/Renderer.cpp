@@ -7,7 +7,7 @@ namespace Engine::Vulkan {
     surface_(Surface(instance_, window)),
     device_(Device(instance_, surface_)),
     swapchain_(Swapchain(device_, instance_, window)) {
-        spdlog::warn("WAFAWF");
+        spdlog::info("Finished renderer initialization.");
     }
 
     Renderer::~Renderer() {

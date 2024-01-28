@@ -49,6 +49,8 @@ namespace Engine::Vulkan {
             // TODO! log
             throw std::runtime_error(std::string("Failed to create instance! Error: ") + string_VkResult(result));
         }
+
+        spdlog::debug("Vulkan instance has been initialized.");
     }
 
     void Instance::Destroy() {

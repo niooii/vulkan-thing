@@ -6,6 +6,7 @@ namespace Engine::Vulkan {
     Device::Device(Instance &instance, Surface &surface) : instance_(instance), surface_(surface) {
         PickPhysicalDevice();
         InitLogicalDevice();
+        spdlog::debug("Vulkan device has been initialized.");
     }
 
     void Device::Destroy() {

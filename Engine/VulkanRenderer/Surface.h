@@ -5,6 +5,7 @@
 
 #include <vulkan/vulkan.h>
 #include <SDL2/SDL_vulkan.h>
+#include <spdlog/spdlog.h>
 
 #include <stdexcept>
 

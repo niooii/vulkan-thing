@@ -1,12 +1,14 @@
 #ifndef VULKAN_STUFF_INSTANCE_H
 #define VULKAN_STUFF_INSTANCE_H
 
+#include "../Window.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_vulkan.h>
 #include <vulkan/vk_enum_string_helper.h>
+#include <spdlog/spdlog.h>
 
 #include <vector>
-#include "../Window.h"
 
 namespace Engine::Vulkan {
 

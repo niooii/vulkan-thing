@@ -4,6 +4,8 @@
 #include "Instance.h"
 #include "Surface.h"
 
+#include <spdlog/spdlog.h>
+
 #include <optional>
 
 namespace Engine::Vulkan {

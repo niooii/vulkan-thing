@@ -3,7 +3,7 @@
 namespace Engine::Vulkan {
 
     Swapchain::Swapchain(Device &device, Instance &instance, Window &window) : device_(device), instance_(instance) {
-
+        spdlog::debug("Vulkan swapchain has been initialized.");
     }
 
     void Swapchain::Destroy() {
