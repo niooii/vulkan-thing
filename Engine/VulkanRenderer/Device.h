@@ -31,6 +31,7 @@ namespace Engine::Vulkan {
 
         // TODO! temporary, figure out what to do with this later
         VkQueue graphics_queue_handle;
+        VkQueue present_queue_handle;
 
     private:
         Instance &instance_;

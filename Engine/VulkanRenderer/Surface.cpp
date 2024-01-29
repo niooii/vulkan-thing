@@ -13,7 +13,7 @@ namespace Engine::Vulkan {
     }
 
     void Surface::Destroy() {
-        vkDestroySurfaceKHR(instance_.vk_instance(), vk_surface_, nullptr);
+        vkDestroySurfaceKHR(instance_.vk_instance(), vk_surface_,   nullptr);
     }
 
     VkSurfaceKHR Surface::vk_surface() {

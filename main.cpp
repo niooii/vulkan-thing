@@ -20,8 +20,6 @@ int main() {
         W_HEIGHT
     };
 
-    spdlog::debug("created window heheeaw");
-
     bool validation_layers_enabled = true;
     Engine::Vulkan::Renderer renderer{
         "app name",

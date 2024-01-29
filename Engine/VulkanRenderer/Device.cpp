@@ -70,6 +70,9 @@ namespace Engine::Vulkan {
 
         vkGetDeviceQueue(vk_logical_, queue_family_indices.graphics_family.value(),
                          0, &graphics_queue_handle);
+
+        vkGetDeviceQueue(vk_logical_, queue_family_indices.present_family.value(),
+                         0, &present_queue_handle);
     }
 
     std::vector<VkDeviceQueueCreateInfo> Device::GetQueueCreateInfos(QueueFamilyIndicies &indices) {
@@ -78,11 +81,20 @@ namespace Engine::Vulkan {
         graphics_create_info.queueFamilyIndex = indices.graphics_family.value();
         graphics_create_info.queueCount = 1;
 
-        float q_prio = 1.0f;
-        graphics_create_info.pQueuePriorities = &q_prio;
+        float graphic_q_prio = 1.0f;
+        graphics_create_info.pQueuePriorities = &graphic_q_prio;
+
+        VkDeviceQueueCreateInfo present_create_info{};
+        present_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+        present_create_info.queueFamilyIndex = indices.present_family.value();
+        present_create_info.queueCount = 1;
+
+        float present_q_prio = 1.0f;
+        present_create_info.pQueuePriorities = &present_q_prio;
 
         return std::vector<VkDeviceQueueCreateInfo> {
-            graphics_create_info
+            graphics_create_info,
+            present_create_info
         };
     }
 
@@ -113,6 +125,7 @@ namespace Engine::Vulkan {
 
             if (supports_presentation) {
                 indices.present_family = i;
+//                spdlog::debug(i);
             }
 
             i++;
