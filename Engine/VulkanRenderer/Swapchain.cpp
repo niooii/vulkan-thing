@@ -72,6 +72,9 @@ namespace Engine::Vulkan {
     }
 
     void Swapchain::Destroy() {
+        for(const auto& image_view : swapchain_image_views_) {
+            vkDestroyImageView(device_.vk_device(), image_view, nullptr);
+        }
         vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
     }
 
