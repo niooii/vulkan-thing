@@ -13,7 +13,6 @@ namespace Engine::Vulkan {
     class Swapchain {
     public:
         Swapchain(Device &device, Instance &instance, Window &window);
-        // This will be called after vk_device finishes setting up.
         void Destroy();
 
     private:

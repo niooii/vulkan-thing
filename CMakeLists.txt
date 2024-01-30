@@ -5,6 +5,7 @@ set (CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+
 if (WIN32) 
     set(SDL2_DIR "E:\\SDL2\\SDL2-2.28.5\\cmake")
 #    set(spdlog_DIR "E:\\spdlog\\build")
