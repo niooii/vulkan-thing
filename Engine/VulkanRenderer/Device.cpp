@@ -17,6 +17,10 @@ namespace Engine::Vulkan {
         return vk_logical_;
     }
 
+    SwapChainSupportDetails &Device::swapchain_support_details() {
+        return swapchain_support_details_;
+    }
+
     void Device::PickPhysicalDevice() {
         uint32_t num_devices;
         vkEnumeratePhysicalDevices(instance_.vk_instance(), &num_devices, nullptr);
@@ -33,6 +37,8 @@ namespace Engine::Vulkan {
             if(DeviceSuitable(physical)) {
                 found_suitable_device = true;
                 vk_physical_ = physical;
+                spdlog::debug("Found first suitable device.");
+                break;
             }
         }
 
@@ -40,18 +46,13 @@ namespace Engine::Vulkan {
             throw std::runtime_error("failed to find suitable vk_device.");
         }
 
-        queue_family_indices = FindQueueFamilies(vk_physical_);
-        if(!queue_family_indices.all_exist()) {
-            throw std::runtime_error("vk_device is missing required queue families.");
-        }
     }
 
     void Device::InitLogicalDevice() {
-        // TODO!
         VkDeviceCreateInfo dev_create_info{};
         dev_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
-        std::vector<VkDeviceQueueCreateInfo> queue_create_infos = GetQueueCreateInfos(queue_family_indices);
+        std::vector<VkDeviceQueueCreateInfo> queue_create_infos = GetQueueCreateInfos(queue_family_indices_);
 
         dev_create_info.pQueueCreateInfos = queue_create_infos.data();
         dev_create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());
@@ -61,6 +62,15 @@ namespace Engine::Vulkan {
 
         dev_create_info.pEnabledFeatures = &dev_features;
 
+        // device extensions
+
+        dev_create_info.ppEnabledExtensionNames = required_device_extensions_.data();
+        dev_create_info.enabledExtensionCount = static_cast<uint32_t>(
+                required_device_extensions_.size()
+                );
+
+
+
         VkResult result = vkCreateDevice(vk_physical_, &dev_create_info, nullptr, &vk_logical_);
 
         if(result != VK_SUCCESS) {
@@ -68,10 +78,10 @@ namespace Engine::Vulkan {
             throw std::runtime_error(std::string("Failed to create vk_device! Error: ") + string_VkResult(result));
         }
 
-        vkGetDeviceQueue(vk_logical_, queue_family_indices.graphics_family.value(),
+        vkGetDeviceQueue(vk_logical_, queue_family_indices_.graphics_family.value(),
                          0, &graphics_queue_handle);
 
-        vkGetDeviceQueue(vk_logical_, queue_family_indices.present_family.value(),
+        vkGetDeviceQueue(vk_logical_, queue_family_indices_.present_family.value(),
                          0, &present_queue_handle);
     }
 
@@ -100,8 +110,38 @@ namespace Engine::Vulkan {
 
     // Internal
     bool Device::DeviceSuitable(VkPhysicalDevice physical_device) {
-        // TODO! handle later, for now choose first found
-        return true;
+        // TODO! handle more later, for now choose first found
+        bool has_required_extensions = HasRequiredExtensions(physical_device);
+
+        if(!has_required_extensions) {
+            return false;
+        }
+
+        queue_family_indices_ = FindQueueFamilies(physical_device);
+        swapchain_support_details_ = QuerySwapchainSupport(physical_device);
+
+        return queue_family_indices_.all_exist()
+            && (!swapchain_support_details_.formats.empty() || !swapchain_support_details_.present_modes.empty());
+    }
+
+    bool Device::HasRequiredExtensions(VkPhysicalDevice physical_device) {
+        uint32_t num_extensions;
+        vkEnumerateDeviceExtensionProperties(physical_device, nullptr, &num_extensions, nullptr);
+
+        std::vector<VkExtensionProperties> available_extensions(num_extensions);
+        vkEnumerateDeviceExtensionProperties(physical_device, nullptr, &num_extensions, available_extensions.data());
+
+        std::set<std::string_view> extensions_to_find(
+                required_device_extensions_.begin(),
+                required_device_extensions_.end()
+                );
+
+        for(const auto& extension : available_extensions) {
+            // implicit conversions smh
+            extensions_to_find.erase(extension.extensionName);
+        }
+
+        return extensions_to_find.empty();
     }
 
     QueueFamilyIndicies Device::FindQueueFamilies(VkPhysicalDevice physical_device) {
@@ -121,11 +161,10 @@ namespace Engine::Vulkan {
 
             // no early return or else because the queues can overlap
             VkBool32 supports_presentation = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(vk_physical_, i, surface_.vk_surface(), &supports_presentation);
+            vkGetPhysicalDeviceSurfaceSupportKHR(physical_device, i, surface_.vk_surface(), &supports_presentation);
 
             if (supports_presentation) {
                 indices.present_family = i;
-//                spdlog::debug(i);
             }
 
             i++;
@@ -134,4 +173,27 @@ namespace Engine::Vulkan {
         return indices;
     }
 
+    SwapChainSupportDetails Device::QuerySwapchainSupport(VkPhysicalDevice physical_device) {
+        SwapChainSupportDetails sc_details;
+
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device, surface_.vk_surface(), &sc_details.capabilities);
+
+        uint32_t num_formats;
+        vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface_.vk_surface(), &num_formats, nullptr);
+
+        if (num_formats != 0) {
+            sc_details.formats.resize(num_formats);
+            vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, surface_.vk_surface(), &num_formats, sc_details.formats.data());
+        }
+
+        uint32_t num_present_modes;
+        vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface_.vk_surface(), &num_present_modes, nullptr);
+
+        if (num_present_modes != 0) {
+            sc_details.present_modes.resize(num_present_modes);
+            vkGetPhysicalDeviceSurfacePresentModesKHR(physical_device, surface_.vk_surface(), &num_present_modes, sc_details.present_modes.data());
+        }
+
+        return sc_details;
+    }
 }

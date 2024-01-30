@@ -54,7 +54,7 @@
 //
 //  // choose swapchain settings
 //  SurfaceFormatKHR getOptimalSurfaceFormat(const vector<SurfaceFormatKHR>& formats);
-//  PresentModeKHR getOptimalPresentationMode(const vector<vk::PresentModeKHR> &presentModes);
+//  PresentModeKHR getOptimalPresentationMode(const vector<vk::PresentModeKHR> &present_modes);
 //  Extent2D getSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities);
 //
 //  // cleanup resources

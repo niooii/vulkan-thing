@@ -3,6 +3,9 @@
 namespace Engine::Vulkan {
 
     Swapchain::Swapchain(Device &device, Instance &instance, Window &window) : device_(device), instance_(instance) {
+
+        device.swapchain_support_details();
+
         spdlog::debug("Vulkan swapchain has been initialized.");
     }
 

@@ -7,6 +7,7 @@
 #include <spdlog/spdlog.h>
 
 #include <optional>
+#include <set>
 
 namespace Engine::Vulkan {
 
@@ -19,6 +20,12 @@ namespace Engine::Vulkan {
         }
     };
 
+    struct SwapChainSupportDetails {
+        VkSurfaceCapabilitiesKHR capabilities;
+        std::vector<VkSurfaceFormatKHR> formats;
+        std::vector<VkPresentModeKHR> present_modes;
+    };
+
     class Device {
     public:
         // When creating devices, chooses the best vk_device based off conditions that I will specify later.
@@ -28,6 +35,8 @@ namespace Engine::Vulkan {
 
         // Accessors
         VkDevice vk_device();
+        SwapChainSupportDetails &swapchain_support_details();
+//        VkPhysicalDevice vk_physical();
 
         // TODO! temporary, figure out what to do with this later
         VkQueue graphics_queue_handle;
@@ -36,7 +45,8 @@ namespace Engine::Vulkan {
     private:
         Instance &instance_;
         Surface &surface_;
-        QueueFamilyIndicies queue_family_indices;
+        QueueFamilyIndicies queue_family_indices_;
+        SwapChainSupportDetails swapchain_support_details_;
 
         VkPhysicalDevice vk_physical_;
         VkDevice vk_logical_;
@@ -47,8 +57,14 @@ namespace Engine::Vulkan {
 
         std::vector<VkDeviceQueueCreateInfo> GetQueueCreateInfos(QueueFamilyIndicies &indices);
 
+        const std::vector<const char*> required_device_extensions_ = {
+                VK_KHR_SWAPCHAIN_EXTENSION_NAME
+        };
+
         bool DeviceSuitable(VkPhysicalDevice physical_device);
+        bool HasRequiredExtensions(VkPhysicalDevice physical_device);
         QueueFamilyIndicies FindQueueFamilies(VkPhysicalDevice physical_device);
+        SwapChainSupportDetails QuerySwapchainSupport(VkPhysicalDevice physical_device);
 
     };
 

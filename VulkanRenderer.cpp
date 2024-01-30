@@ -1,5 +1,4 @@
 //#include "VulkanRenderer.h"
-//#include "Globals.h"
 //#include "Utils.h"
 //#include "vulkan/vulkan.hpp"
 //#include "vulkan/vulkan_enums.hpp"
