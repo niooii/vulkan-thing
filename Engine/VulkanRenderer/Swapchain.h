@@ -33,7 +33,7 @@ namespace Engine::Vulkan {
         VkSurfaceFormatKHR OptimalFormat();
         VkPresentModeKHR OptimalPresentMode();
         VkExtent2D GetSwapExtent();
-        void CreateImages();
+        void CreateImages ();
         void CreateImageViews();
     };
 
