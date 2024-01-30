@@ -1,4 +1,4 @@
-    #pragma once
+#pragma once
 
 // STD INCLUDES
 
@@ -10,6 +10,7 @@
 #include <SDL.h>
 
 namespace Engine {
+    // Window should not outlive Renderer
     class Window {
     public:
         Window(const char *name, int x, int y, int w, int h);
@@ -27,7 +28,10 @@ namespace Engine {
 
         void PollEvents();
 
+        // Accessors and other attributes
         SDL_Window* sdl_window();
+        uint16_t width();
+        uint16_t height();
 
         //TODO! replace with event architecture thing.
 
@@ -80,4 +84,5 @@ namespace Engine {
         void (*on_keyup_)(SDL_Keycode key, Uint16 modifier){nullptr };
 
     };
+
 }

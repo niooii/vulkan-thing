@@ -18,6 +18,7 @@ namespace Engine::Vulkan {
         bool all_exist() {
             return graphics_family.has_value() && present_family.has_value();
         }
+
     };
 
     struct SwapChainSupportDetails {
@@ -35,16 +36,19 @@ namespace Engine::Vulkan {
 
         // Accessors
         VkDevice vk_device();
-        SwapChainSupportDetails &swapchain_support_details();
-//        VkPhysicalDevice vk_physical();
+        QueueFamilyIndicies& queue_family_indices();
+        SwapChainSupportDetails& swapchain_support_details();
 
         // TODO! temporary, figure out what to do with this later
         VkQueue graphics_queue_handle;
         VkQueue present_queue_handle;
 
+        // TODO! finish later
+        bool SetDevice(uint32_t idx);
+
     private:
-        Instance &instance_;
-        Surface &surface_;
+        Instance& instance_;
+        Surface& surface_;
         QueueFamilyIndicies queue_family_indices_;
         SwapChainSupportDetails swapchain_support_details_;
 
@@ -61,8 +65,11 @@ namespace Engine::Vulkan {
                 VK_KHR_SWAPCHAIN_EXTENSION_NAME
         };
 
-        bool DeviceSuitable(VkPhysicalDevice physical_device);
+        // Returns device name if found, else returns an empty optional.
+        std::optional<std::string_view> DeviceSuitable(VkPhysicalDevice physical_device);
+
         bool HasRequiredExtensions(VkPhysicalDevice physical_device);
+
         QueueFamilyIndicies FindQueueFamilies(VkPhysicalDevice physical_device);
         SwapChainSupportDetails QuerySwapchainSupport(VkPhysicalDevice physical_device);
 

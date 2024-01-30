@@ -13,15 +13,15 @@ namespace Engine::Vulkan {
 
     class Surface {
     public:
-        Surface(Instance &instance, Window &window);
+        Surface(Instance& instance, Window& window);
         void Destroy();
 
         // Accessors
         VkSurfaceKHR vk_surface();
 
     private:
-        Instance &instance_;
-        Window &window_;
+        Instance& instance_;
+        Window& window_;
 
         VkSurfaceKHR vk_surface_;
 

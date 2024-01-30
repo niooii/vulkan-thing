@@ -2,7 +2,7 @@
 
 namespace Engine::Vulkan {
 
-    Surface::Surface(Instance &instance, Window &window)
+    Surface::Surface(Instance& instance, Window& window)
     : instance_(instance), window_(window) {
         SDL_bool res = SDL_Vulkan_CreateSurface(window.sdl_window(), instance.vk_instance(), &vk_surface_);
 

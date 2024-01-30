@@ -3,7 +3,7 @@
 
 namespace Engine::Vulkan {
 
-    Device::Device(Instance &instance, Surface &surface) : instance_(instance), surface_(surface) {
+    Device::Device(Instance& instance, Surface& surface) : instance_(instance), surface_(surface) {
         PickPhysicalDevice();
         InitLogicalDevice();
         spdlog::debug("Vulkan device has been initialized.");
@@ -15,6 +15,10 @@ namespace Engine::Vulkan {
 
     VkDevice Device::vk_device() {
         return vk_logical_;
+    }
+
+    QueueFamilyIndicies& Device::queue_family_indices() {
+        return queue_family_indices_;
     }
 
     SwapChainSupportDetails &Device::swapchain_support_details() {
@@ -34,10 +38,11 @@ namespace Engine::Vulkan {
 
         bool found_suitable_device{false};
         for(auto physical : physical_devices) {
-            if(DeviceSuitable(physical)) {
+            std::optional<std::string_view> device_name;
+            if((device_name = DeviceSuitable(physical)).has_value()) {
                 found_suitable_device = true;
                 vk_physical_ = physical;
-                spdlog::debug("Found first suitable device.");
+                spdlog::debug("Found first suitable device: {}", device_name.value()    );
                 break;
             }
         }
@@ -109,19 +114,27 @@ namespace Engine::Vulkan {
     }
 
     // Internal
-    bool Device::DeviceSuitable(VkPhysicalDevice physical_device) {
-        // TODO! handle more later, for now choose first found
+    std::optional<std::string_view> Device::DeviceSuitable(VkPhysicalDevice physical_device) {
+        // TODO! handle more later, for now choose first found that satisfies reqs
+
+        VkPhysicalDeviceProperties device_properties{};
+        vkGetPhysicalDeviceProperties(physical_device, &device_properties);
+
+        std::string_view this_device_name{device_properties.deviceName};
+
         bool has_required_extensions = HasRequiredExtensions(physical_device);
 
         if(!has_required_extensions) {
-            return false;
+            return std::optional<std::string_view>{};
         }
 
         queue_family_indices_ = FindQueueFamilies(physical_device);
         swapchain_support_details_ = QuerySwapchainSupport(physical_device);
 
-        return queue_family_indices_.all_exist()
-            && (!swapchain_support_details_.formats.empty() || !swapchain_support_details_.present_modes.empty());
+        bool device_suitable = queue_family_indices_.all_exist()
+                && (!swapchain_support_details_.formats.empty() || !swapchain_support_details_.present_modes.empty());
+
+        return device_suitable ? std::optional<std::string_view>{this_device_name} : std::optional<std::string_view>{};
     }
 
     bool Device::HasRequiredExtensions(VkPhysicalDevice physical_device) {

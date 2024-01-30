@@ -70,7 +70,17 @@ namespace Engine {
         }
     }
 
-    SDL_Window *Window::sdl_window() { return sdl_window_; }
+    SDL_Window* Window::sdl_window() {
+        return sdl_window_;
+    }
+
+    uint16_t Window::width() {
+        return width_;
+    }
+
+    uint16_t Window::height() {
+        return height_;
+    }
 
     void Window::SetMouseMotionCallback(void (*callback)(int, int, int, int)) {
         on_mouse_motion_ = callback;
