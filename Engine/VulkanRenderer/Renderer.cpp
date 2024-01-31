@@ -6,11 +6,13 @@ namespace Engine::Vulkan {
     : instance_(Instance(application_name, engine_name, window, validation_layers_enabled)),
     surface_(Surface(instance_, window)),
     device_(Device(instance_, surface_)),
-    swapchain_(Swapchain(device_, instance_, surface_, window)) {
+    swapchain_(Swapchain(device_, instance_, surface_, window)),
+    pipeline_(Pipeline(device_)) {
         spdlog::info("Finished renderer initialization.");
     }
 
     Renderer::~Renderer() {
+        pipeline_.Destroy();
         swapchain_.Destroy();
         device_.Destroy();
         surface_.Destroy();

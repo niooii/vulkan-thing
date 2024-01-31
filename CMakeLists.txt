@@ -80,6 +80,8 @@ main.cpp
         Engine/VulkanRenderer/Surface.h
         Engine/VulkanRenderer/Pipeline.cpp
         Engine/VulkanRenderer/Pipeline.h
+        Engine/Utils.cpp
+        Engine/Utils.h
 )
 
 # add_dependencies(vulkan_stuff Shaders)

@@ -5,6 +5,7 @@
 #include "Device.h"
 #include "Swapchain.h"
 #include "Surface.h"
+#include "Pipeline.h"
 
 #include <vulkan/vulkan.h>
 #include <spdlog/spdlog.h>
@@ -24,6 +25,7 @@ namespace Engine::Vulkan {
         Surface surface_;
         Device device_;
         Swapchain swapchain_;
+        Pipeline pipeline_;
     };
 
 }
