@@ -3,6 +3,7 @@
 
 #include "Device.h"
 #include "../Window.h"
+#include "Utils.h"
 
 #include <spdlog/spdlog.h>
 

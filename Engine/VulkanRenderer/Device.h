@@ -3,6 +3,7 @@
 
 #include "Instance.h"
 #include "Surface.h"
+#include "Utils.h"
 
 #include <spdlog/spdlog.h>
 

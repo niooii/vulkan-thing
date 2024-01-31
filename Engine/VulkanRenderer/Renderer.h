@@ -6,6 +6,7 @@
 #include "Swapchain.h"
 #include "Surface.h"
 #include "Pipeline.h"
+#include "Utils.h"
 
 #include <vulkan/vulkan.h>
 #include <spdlog/spdlog.h>

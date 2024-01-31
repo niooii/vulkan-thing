@@ -45,10 +45,7 @@ namespace Engine::Vulkan {
 
         VkResult result = vkCreateInstance(&create_info, nullptr, &vk_instance_);
 
-        if (result != VK_SUCCESS) {
-            // TODO! log
-            throw std::runtime_error(std::string("Failed to create instance! Error: ") + string_VkResult(result));
-        }
+        Utils::ExpectBadResult("Failed to create vulkan instance", result);
 
         spdlog::debug("Vulkan instance has been initialized.");
     }

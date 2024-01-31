@@ -78,10 +78,7 @@ namespace Engine::Vulkan {
 
         VkResult result = vkCreateDevice(vk_physical_, &dev_create_info, nullptr, &vk_logical_);
 
-        if(result != VK_SUCCESS) {
-            // TODO! log
-            throw std::runtime_error(std::string("Failed to create vk_device! Error: ") + string_VkResult(result));
-        }
+        Utils::ExpectBadResult("Failed to create vk_device", result);
 
         vkGetDeviceQueue(vk_logical_, queue_family_indices_.graphics_family.value(),
                          0, &graphics_queue_handle);

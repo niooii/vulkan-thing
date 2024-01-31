@@ -165,12 +165,9 @@ namespace Engine::Vulkan {
 
         for(size_t i = 0; i < swapchain_images_.size(); i++) {
             create_info.image = swapchain_images_[i];
-            VkResult res = vkCreateImageView(device_.vk_device(), &create_info, nullptr, &swapchain_image_views_[i]);
+            VkResult result = vkCreateImageView(device_.vk_device(), &create_info, nullptr, &swapchain_image_views_[i]);
 
-            if(res != VK_SUCCESS) {
-                spdlog::error("Error: {}", string_VkResult(res));
-                throw std::runtime_error("Failed to create imageviews.");
-            }
+            Utils::ExpectBadResult("Failed to create imageview", result);
         }
     }
 

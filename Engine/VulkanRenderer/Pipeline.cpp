@@ -19,8 +19,16 @@ namespace Engine::Vulkan {
         std::vector<char> code = Utils::ReadFile(filename);
         VkShaderModuleCreateInfo create_info{};
         create_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        create_info.codeSize = code.size();
+        create_info.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
-        todo!()
+        VkShaderModule module;
+
+        VkResult result = vkCreateShaderModule(device_.vk_device(), &create_info, nullptr, &module);
+
+        Utils::ExpectBadResult("Failed to create shader module", result);
+
+        return module;
     }
 
 }

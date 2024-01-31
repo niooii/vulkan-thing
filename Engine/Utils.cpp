@@ -20,4 +20,12 @@ namespace Engine {
 
         return buf;
     }
+
+    void Utils::ExpectBadResult(const char* message, VkResult res) {
+        if(res != VK_SUCCESS) {
+            spdlog::error("Error: {}", string_VkResult(res));
+            throw std::runtime_error(message);
+        }
+    }
+
 }
