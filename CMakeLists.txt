@@ -5,7 +5,6 @@ set (CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
 if (WIN32) 
     set(SDL2_DIR "E:\\SDL2\\SDL2-2.28.5\\cmake")
 #    set(spdlog_DIR "E:\\spdlog\\build")
@@ -17,7 +16,51 @@ add_subdirectory(External/spdlog)
 find_package(spdlog)
 find_package(Vulkan REQUIRED)
 
-add_executable(vulkan_stuff 
+# compile shaders
+# shit doesnt even work rn just use bash script smh
+
+#if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "AMD64")
+#    set(GLSL_VALIDATOR "$ENV{VULKAN_SDK}/Bin/glslangValidator.exe")
+#else()
+#    set(GLSL_VALIDATOR "$ENV{VULKAN_SDK}/Bin32/glslangValidator.exe")
+#endif()
+
+#if (WIN32)
+#    set(GLSL_VALIDATOR "$ENV{VULKAN_SDK}/Bin/glslangValidator.exe")
+#else ()
+#    set(GLSL_VALIDATOR "$ENV{VULKAN_SDK}/bin/glslangValidator")
+#endif()
+#
+#message("ENV: $ENV{VULKAN_SDK}")
+#
+#message("GLSL VALIDATOR: ${GLSL_VALIDATOR}")
+#
+#file(GLOB_RECURSE GLSL_SOURCE_FILES
+#        "shaders/*.frag"
+#        "shaders/*.vert"
+#)
+#
+#message("SOURCEFILES: ${GLSL_SOURCE_FILES}")
+#
+#foreach(GLSL ${GLSL_SOURCE_FILES})
+#    get_filename_component(FILE_NAME ${GLSL} NAME)
+#    set(SPIRV "${PROJECT_BINARY_DIR}/shaders/${FILE_NAME}.spv")
+#    add_custom_command(
+#            OUTPUT ${SPIRV}
+#            COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_BINARY_DIR}/shaders/"
+#            COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}
+#            DEPENDS ${GLSL})
+#    list(APPEND SPIRV_BINARY_FILES ${SPIRV})
+#endforeach(GLSL)
+#
+#add_custom_target(
+#        Shaders
+#        DEPENDS ${SPIRV_BINARY_FILES}
+#)
+#
+#message("BINARYFILES: ${SPIRV_BINARY_FILES}")
+
+add_executable(vulkan_stuff
 main.cpp
         Engine/Window.cpp
         Engine/Window.h
@@ -35,10 +78,14 @@ main.cpp
         Engine/VulkanRenderer/Swapchain.h
         Engine/VulkanRenderer/Surface.cpp
         Engine/VulkanRenderer/Surface.h
+        Engine/VulkanRenderer/Pipeline.cpp
+        Engine/VulkanRenderer/Pipeline.h
 )
 
-if (WIN32) 
-    target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS})   
+# add_dependencies(vulkan_stuff Shaders)
+
+if (WIN32)
+    target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS})
     target_include_directories(vulkan_stuff PRIVATE ${spdlog_win_INCLUDE_DIRS})
 else()
     target_include_directories(vulkan_stuff PRIVATE ${SDL2_INCLUDE_DIRS}/SDL2)
