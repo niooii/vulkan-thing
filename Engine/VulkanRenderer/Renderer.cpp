@@ -7,7 +7,7 @@ namespace Engine::Vulkan {
     surface_(Surface(instance_, window)),
     device_(Device(instance_, surface_)),
     swapchain_(Swapchain(device_, instance_, surface_, window)),
-    pipeline_(Pipeline(device_)) {
+    pipeline_(Pipeline(device_, swapchain_)) {
         spdlog::info("Finished renderer initialization.");
     }
 

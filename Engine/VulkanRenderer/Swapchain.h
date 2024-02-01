@@ -14,6 +14,10 @@ namespace Engine::Vulkan {
     class Swapchain {
     public:
         Swapchain(Device &device, Instance &instance, Surface &surface, Window &window);
+
+        // Accessors
+        VkExtent2D extent();
+
         void Destroy();
 
     private:
@@ -25,7 +29,7 @@ namespace Engine::Vulkan {
         VkSwapchainKHR vk_swapchain_;
 
         // Attributes
-        VkExtent2D current_extent_;
+        VkExtent2D extent_;
         VkFormat image_format_;
         std::vector<VkImage> swapchain_images_;
         std::vector<VkImageView> swapchain_image_views_;

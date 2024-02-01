@@ -8,8 +8,8 @@ namespace Engine::Vulkan {
         const auto& surface_capabilities = device.swapchain_support_details().capabilities;
 
         VkSurfaceFormatKHR optimal_format = OptimalFormat();
-        
-        current_extent_ = GetSwapExtent();
+
+        extent_ = GetSwapExtent();
         image_format_ = optimal_format.format;
 
         VkSwapchainCreateInfoKHR sc_create_info{};
@@ -18,7 +18,7 @@ namespace Engine::Vulkan {
         sc_create_info.imageFormat = image_format_;
         sc_create_info.imageColorSpace = optimal_format.colorSpace;
         sc_create_info.presentMode = OptimalPresentMode();
-        sc_create_info.imageExtent = current_extent_;
+        sc_create_info.imageExtent = extent_;
 
         sc_create_info.surface = surface.vk_surface();
 
@@ -69,6 +69,10 @@ namespace Engine::Vulkan {
 
         CreateImages();
         CreateImageViews();
+    }
+
+    VkExtent2D Swapchain::extent() {
+        return extent_;
     }
 
     void Swapchain::Destroy() {

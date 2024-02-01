@@ -3,16 +3,18 @@
 
 #include "Device.h"
 #include "Utils.h"
+#include "Swapchain.h"
 
 namespace Engine::Vulkan {
 
     class Pipeline {
     public:
-        Pipeline(Device& device);
+        Pipeline(Device& device, Swapchain& swapchain);
         void Destroy();
 
     private:
         Device& device_;
+        Swapchain& swapchain_;
 
         VkPipeline vk_pipeline_;
         VkPipelineLayout vk_pipeline_layout_;
