@@ -16,7 +16,7 @@ add_subdirectory(External/spdlog)
 find_package(spdlog)
 find_package(Vulkan REQUIRED)
 
-# compile shaders
+# compile Shaders
 # shit doesnt even work rn just use bash script smh
 
 #if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "AMD64")
@@ -36,18 +36,18 @@ find_package(Vulkan REQUIRED)
 #message("GLSL VALIDATOR: ${GLSL_VALIDATOR}")
 #
 #file(GLOB_RECURSE GLSL_SOURCE_FILES
-#        "shaders/*.frag"
-#        "shaders/*.vert"
+#        "Shaders/*.frag"
+#        "Shaders/*.vert"
 #)
 #
 #message("SOURCEFILES: ${GLSL_SOURCE_FILES}")
 #
 #foreach(GLSL ${GLSL_SOURCE_FILES})
 #    get_filename_component(FILE_NAME ${GLSL} NAME)
-#    set(SPIRV "${PROJECT_BINARY_DIR}/shaders/${FILE_NAME}.spv")
+#    set(SPIRV "${PROJECT_BINARY_DIR}/Shaders/${FILE_NAME}.spv")
 #    add_custom_command(
 #            OUTPUT ${SPIRV}
-#            COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_BINARY_DIR}/shaders/"
+#            COMMAND ${CMAKE_COMMAND} -E make_directory "${PROJECT_BINARY_DIR}/Shaders/"
 #            COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}
 #            DEPENDS ${GLSL})
 #    list(APPEND SPIRV_BINARY_FILES ${SPIRV})

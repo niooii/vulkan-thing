@@ -5,14 +5,10 @@
 #include <vector>
 #include <vulkan/vk_enum_string_helper.h>
 
-namespace Engine {
+namespace Engine::Utils {
 
-    namespace Utils {
-
-        static std::vector<char> ReadFile(const std::string_view& filename);
-        static void ExpectBadResult(const char* message, VkResult res);
-
-    };
+    std::vector<char> ReadFile(const std::string_view& filename);
+    void ExpectBadResult(const char* message, VkResult res);
 
 }
 

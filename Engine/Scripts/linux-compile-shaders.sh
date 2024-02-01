@@ -10,7 +10,7 @@ OUTPUT_DIR="$2"
 
 mkdir -p "$OUTPUT_DIR"
 
-# vertex shaders
+# vertex Shaders
 for vert_shader in "$INPUT_DIR"/*.vert; do
     vert_shader_name=$(basename "$vert_shader")
     vert_output="$OUTPUT_DIR/${vert_shader_name%.vert}.vert.spv"
@@ -24,7 +24,7 @@ for vert_shader in "$INPUT_DIR"/*.vert; do
     fi
 done
 
-# fragment shaders
+# fragment Shaders
 for frag_shader in "$INPUT_DIR"/*.frag; do
     frag_shader_name=$(basename "$frag_shader")
     frag_output="$OUTPUT_DIR/${frag_shader_name%.frag}.frag.spv"

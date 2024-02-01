@@ -7,7 +7,12 @@
 namespace Engine::Vulkan {
 
     Pipeline::Pipeline(Device &device) : device_(device) {
+        std::string_view vert_path{"Shaders/triangle.vert.spv"};
+        std::string_view frag_path{"Shaders/triangle.frag.spv"};
+        vert_shader_module_ = CreateShaderModule(vert_path);
+        frag_shader_module_ = CreateShaderModule(frag_path);
 
+        spdlog::debug("Pipeline initialized.");
     }
 
     void Pipeline::Destroy() {
