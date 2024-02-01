@@ -7,8 +7,8 @@
 namespace Engine::Vulkan {
 
     Pipeline::Pipeline(Device &device) : device_(device) {
-        std::string_view vert_path{"Shaders/triangle.vert.spv"};
-        std::string_view frag_path{"Shaders/triangle.frag.spv"};
+        std::string_view vert_path{"../Shaders/triangle.vert.spv"};
+        std::string_view frag_path{"../Shaders/triangle.frag.spv"};
         vert_shader_module_ = CreateShaderModule(vert_path);
         frag_shader_module_ = CreateShaderModule(frag_path);
 
@@ -16,6 +16,10 @@ namespace Engine::Vulkan {
     }
 
     void Pipeline::Destroy() {
+        // TODO! replace with destroy all shader modules later
+        vkDestroyShaderModule(device_.vk_device(), vert_shader_module_, nullptr);
+        vkDestroyShaderModule(device_.vk_device(), frag_shader_module_, nullptr);
+
         vkDestroyPipeline(device_.vk_device(), vk_pipeline_, nullptr);
         vkDestroyPipelineLayout(device_.vk_device(), vk_pipeline_layout_, nullptr);
     }
