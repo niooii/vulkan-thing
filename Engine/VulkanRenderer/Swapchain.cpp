@@ -75,6 +75,10 @@ namespace Engine::Vulkan {
         return extent_; 
     }
 
+    VkFormat Swapchain::image_format() {
+        return image_format_;
+    }
+
     void Swapchain::Destroy() {
         for(const auto& image_view : swapchain_image_views_) {
             vkDestroyImageView(device_.vk_device(), image_view, nullptr);

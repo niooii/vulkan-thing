@@ -17,6 +17,7 @@ namespace Engine::Vulkan {
 
         // Accessors
         VkExtent2D extent();
+        VkFormat image_format();
 
         void Destroy();
 

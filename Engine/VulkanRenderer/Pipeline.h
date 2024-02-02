@@ -18,11 +18,13 @@ namespace Engine::Vulkan {
 
         VkPipeline vk_pipeline_;
         VkPipelineLayout vk_pipeline_layout_;
+        VkRenderPass render_pass_;
         VkShaderModule vert_shader_module_;
         VkShaderModule frag_shader_module_;
 
         // Internal
         VkShaderModule CreateShaderModule(std::string_view& filename);
+        VkRenderPass CreateRenderPass();
     };
 
 }
