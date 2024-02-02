@@ -61,7 +61,35 @@ namespace Engine::Vulkan {
         viewport_info.pScissors = &scissor;
         viewport_info.scissorCount = 1;
 
-        // TODO! rasterizer
+        VkPipelineRasterizationStateCreateInfo rasterizer_info{};
+        rasterizer_info.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
+        rasterizer_info.depthClampEnable = VK_FALSE;
+        // geometry never passes through rasterization stage. no more frames
+        rasterizer_info.rasterizerDiscardEnable = VK_FALSE;
+        rasterizer_info.polygonMode = VK_POLYGON_MODE_FILL;
+        rasterizer_info.lineWidth = 1.0f;
+        rasterizer_info.cullMode = VK_CULL_MODE_BACK_BIT;
+        rasterizer_info.frontFace = VK_FRONT_FACE_CLOCKWISE;
+
+        // alteration of depth values and stuff
+        rasterizer_info.depthBiasEnable = VK_FALSE;
+        rasterizer_info.depthBiasConstantFactor = 0.0f; // Optional
+        rasterizer_info.depthBiasClamp = 0.0f; // Optional
+        rasterizer_info.depthBiasSlopeFactor = 0.0f; // Optional
+
+        VkPipelineMultisampleStateCreateInfo multisample_info{};
+        multisample_info.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
+        multisample_info.sampleShadingEnable = VK_FALSE;
+        multisample_info.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
+        multisample_info.minSampleShading = 1.0f; // Optional
+        multisample_info.pSampleMask = nullptr; // Optional
+        multisample_info.alphaToCoverageEnable = VK_FALSE; // Optional
+        multisample_info.alphaToOneEnable = VK_FALSE; // Optional
+
+        // TODO! depth and stencil testing
+
+        VkPipelineColorBlendAttachmentState blend_attachment_info{};
+        blend_attachment_info.alphaBlendOp = VK_BLEND_OP_XOR_EXT;
 
         spdlog::debug("Pipeline initialized.");
     }
@@ -74,7 +102,7 @@ namespace Engine::Vulkan {
         vkDestroyPipeline(device_.vk_device(), vk_pipeline_, nullptr);
         vkDestroyPipelineLayout(device_.vk_device(), vk_pipeline_layout_, nullptr);
     }
-g
+
     VkShaderModule Pipeline::CreateShaderModule(std::string_view& filename) {
         std::vector<char> code = Utils::ReadFile(filename);
         VkShaderModuleCreateInfo create_info{};

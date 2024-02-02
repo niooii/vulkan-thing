@@ -72,7 +72,7 @@ namespace Engine::Vulkan {
     }
 
     VkExtent2D Swapchain::extent() {
-        return extent_;
+        return extent_; 
     }
 
     void Swapchain::Destroy() {
