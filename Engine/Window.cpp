@@ -14,6 +14,8 @@ namespace Engine {
 
         uint32_t WindowFlags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_VULKAN | SDL_WINDOW_ALLOW_HIGHDPI;
         sdl_window_ = SDL_CreateWindow(name, x, y, w, h, WindowFlags);
+
+        spdlog::debug("Window initialized.");
     }
 
     Window::~Window() {

@@ -82,6 +82,11 @@ main.cpp
         Engine/VulkanRenderer/Pipeline.h
         Engine/Utils.cpp
         Engine/Utils.h
+        Engine/VulkanRenderer/Device/DeviceUtils.h
+        Engine/VulkanRenderer/Device/DeviceUtils.h
+        Engine/VulkanRenderer/Device/PhysicalDevice.cpp
+        Engine/VulkanRenderer/Device/PhysicalDevice.h
+        Engine/VulkanRenderer/Device/PhysicalDevice.h
 )
 
 # add_dependencies(vulkan_stuff Shaders)
