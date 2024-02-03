@@ -69,17 +69,17 @@ main.cpp
         Engine/VulkanRenderer/Renderer.cpp
         Engine/VulkanRenderer/Renderer.h
         Engine/VulkanRenderer/Renderer.h
-        Engine/VulkanRenderer/Device.cpp
-        Engine/VulkanRenderer/Device.h
-        Engine/VulkanRenderer/Device.h
+        Engine/VulkanRenderer/Device/Device.cpp
+        Engine/VulkanRenderer/Device/Device.h
+        Engine/VulkanRenderer/Device/Device.h
         Engine/VulkanRenderer/Instance.cpp
         Engine/VulkanRenderer/Instance.h
         Engine/VulkanRenderer/Swapchain.cpp
         Engine/VulkanRenderer/Swapchain.h
         Engine/VulkanRenderer/Surface.cpp
         Engine/VulkanRenderer/Surface.h
-        Engine/VulkanRenderer/Pipeline.cpp
-        Engine/VulkanRenderer/Pipeline.h
+        Engine/VulkanRenderer/GraphicsPipeline.cpp
+        Engine/VulkanRenderer/GraphicsPipeline.h
         Engine/Utils.cpp
         Engine/Utils.h
         Engine/VulkanRenderer/Device/DeviceUtils.h
@@ -87,6 +87,8 @@ main.cpp
         Engine/VulkanRenderer/Device/PhysicalDevice.cpp
         Engine/VulkanRenderer/Device/PhysicalDevice.h
         Engine/VulkanRenderer/Device/PhysicalDevice.h
+        Engine/VulkanRenderer/Device/QueueFamilyIndices.h
+        Engine/VulkanRenderer/Device/SwapchainSupportedProperties.h
 )
 
 # add_dependencies(vulkan_stuff Shaders)

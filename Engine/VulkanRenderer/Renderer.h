@@ -2,10 +2,11 @@
 #define VULKAN_STUFF_RENDERER_H
 
 #include "Instance.h"
-#include "Device.h"
 #include "Swapchain.h"
 #include "Surface.h"
-#include "Pipeline.h"
+#include "GraphicsPipeline.h"
+#include "Device/Device.h"
+#include "Device/DeviceUtils.h"
 #include "Utils.h"
 
 #include <vulkan/vulkan.h>
@@ -22,11 +23,11 @@ namespace Engine::Vulkan {
         // Destroys all resources in *deliberate* order.
         ~Renderer();
     private:
-        Instance instance_;
-        Surface surface_;
-        Device device_;
-        Swapchain swapchain_;
-        Pipeline pipeline_;
+        std::optional<Instance> instance_;
+        std::optional<Surface> surface_;
+        std::optional<Device> device_;
+        std::optional<Swapchain> swapchain_;
+        std::optional<GraphicsPipeline> pipeline_;
     };
 
 }

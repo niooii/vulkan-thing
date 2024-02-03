@@ -1,15 +1,15 @@
-#ifndef VULKAN_STUFF_PIPELINE_H
-#define VULKAN_STUFF_PIPELINE_H
+#ifndef VULKAN_STUFF_GRAPHICSPIPELINE_H
+#define VULKAN_STUFF_GRAPHICSPIPELINE_H
 
-#include "Device.h"
+#include "VulkanRenderer/Device/Device.h"
 #include "Utils.h"
 #include "Swapchain.h"
 
 namespace Engine::Vulkan {
 
-    class Pipeline {
+    class GraphicsPipeline {
     public:
-        Pipeline(Device& device, Swapchain& swapchain);
+        GraphicsPipeline(Device& device, Swapchain& swapchain);
         void Destroy();
 
     private:

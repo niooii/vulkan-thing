@@ -1,7 +1,7 @@
 #ifndef VULKAN_STUFF_SWAPCHAIN_H
 #define VULKAN_STUFF_SWAPCHAIN_H
 
-#include "Device.h"
+#include "VulkanRenderer/Device/Device.h"
 #include "../Window.h"
 #include "Utils.h"
 

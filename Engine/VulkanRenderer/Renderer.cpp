@@ -2,21 +2,27 @@
 
 namespace Engine::Vulkan {
 
-    Renderer::Renderer(const char* application_name, const char* engine_name, Window& window, bool validation_layers_enabled)
-    : instance_(Instance(application_name, engine_name, window, validation_layers_enabled)),
-    surface_(Surface(instance_, window)),
-    device_(Device(instance_, surface_)),
-    swapchain_(Swapchain(device_, instance_, surface_, window)),
-    pipeline_(Pipeline(device_, swapchain_)) {
+    Renderer::Renderer(const char* application_name, const char* engine_name, Window& window, bool validation_layers_enabled) {
+
+        // init instance
+        instance_.emplace(Instance{application_name, engine_name, window, validation_layers_enabled});
+        Instance& instance = instance_.value();
+
+        std::vector<PhysicalDevice> physical_devices = DeviceUtils::GetPhysicalDevices(instance);
+
+        assert(!physical_devices.empty());
+
+        device_
+
         spdlog::info("Finished renderer initialization.");
     }
 
     Renderer::~Renderer() {
-        pipeline_.Destroy();
-        swapchain_.Destroy();
-        device_.Destroy();
-        surface_.Destroy();
-        instance_.Destroy();
+        pipeline_.value().Destroy();
+        swapchain_.value().Destroy();
+        device_.value().Destroy();
+        surface_.value().Destroy();
+        instance_.value().Destroy();
     }
 
 }

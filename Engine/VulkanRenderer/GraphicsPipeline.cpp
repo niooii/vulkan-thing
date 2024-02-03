@@ -2,11 +2,11 @@
 // Created by niooi on 1/30/24.
 //
 
-#include "Pipeline.h"
+#include "GraphicsPipeline.h"
 
 namespace Engine::Vulkan {
 
-    Pipeline::Pipeline(Device &device, Swapchain& swapchain) : device_(device), swapchain_(swapchain) {
+    GraphicsPipeline::GraphicsPipeline(Device &device, Swapchain& swapchain) : device_(device), swapchain_(swapchain) {
         std::string_view vert_path{"../Shaders/triangle.vert.spv"};
         std::string_view frag_path{"../Shaders/triangle.frag.spv"};
         vert_shader_module_ = CreateShaderModule(vert_path);
@@ -158,10 +158,10 @@ namespace Engine::Vulkan {
 
         vkCreateGraphicsPipelines(device_.vk_device(), nullptr, 1, &pipeline_info, nullptr, &vk_pipeline_);
 
-        spdlog::debug("Pipeline initialized.");
+        spdlog::debug("GraphicsPipeline initialized.");
     }
 
-    void Pipeline::Destroy() {
+    void GraphicsPipeline::Destroy() {
         // TODO! replace with destroy all shader modules later
         vkDestroyShaderModule(device_.vk_device(), vert_shader_module_, nullptr);
         vkDestroyShaderModule(device_.vk_device(), frag_shader_module_, nullptr);
@@ -172,7 +172,7 @@ namespace Engine::Vulkan {
         vkDestroyPipelineLayout(device_.vk_device(), vk_pipeline_layout_, nullptr);
     }
 
-    VkShaderModule Pipeline::CreateShaderModule(std::string_view& filename) {
+    VkShaderModule GraphicsPipeline::CreateShaderModule(std::string_view& filename) {
         std::vector<char> code = Utils::ReadFile(filename);
         VkShaderModuleCreateInfo create_info{};
         create_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -188,7 +188,7 @@ namespace Engine::Vulkan {
         return module;
     }
 
-    VkRenderPass Pipeline::CreateRenderPass() {
+    VkRenderPass GraphicsPipeline::CreateRenderPass() {
         VkAttachmentDescription color_attachment{};
         color_attachment.format = swapchain_.image_format();
         color_attachment.samples = VK_SAMPLE_COUNT_1_BIT;

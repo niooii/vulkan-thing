@@ -5,7 +5,7 @@ namespace Engine::Vulkan {
     Swapchain::Swapchain(Device& device, Instance& instance, Surface& surface, Window& window)
     : device_(device), instance_(instance), surface_(surface), window_(window) {
 
-        const auto& surface_capabilities = device.swapchain_support_details().capabilities;
+        const auto& surface_capabilities = device.get_swapchain_support_properties().capabilities;
 
         VkSurfaceFormatKHR optimal_format = OptimalFormat();
 
@@ -33,7 +33,7 @@ namespace Engine::Vulkan {
         // color attachment bc directly render
         sc_create_info.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-        const QueueFamilyIndicies& q_indices = device.queue_family_indices();
+        const QueueFamilyIndices& q_indices = device.get_queue_families();
         uint32_t all_indices[] = {
                 q_indices.graphics_family.value(), q_indices.present_family.value()
         };
@@ -88,7 +88,7 @@ namespace Engine::Vulkan {
 
     // Internal
     VkSurfaceFormatKHR Swapchain::OptimalFormat() {
-        const auto &available_formats = device_.swapchain_support_details().formats;
+        const auto &available_formats = device_.get_swapchain_support_properties().formats;
 
         for(const auto &format : available_formats) {
 //            spdlog::debug("{} {}", string_VkFormat(format.format), string_VkColorSpaceKHR(format.colorSpace));
@@ -104,7 +104,7 @@ namespace Engine::Vulkan {
     }
 
     VkPresentModeKHR Swapchain::OptimalPresentMode() {
-        const auto &available_present_modes = device_.swapchain_support_details().present_modes;
+        const auto &available_present_modes = device_.get_swapchain_support_properties().present_modes;
 
         for(const auto &present_mode : available_present_modes) {
 //            spdlog::debug("{}", string_VkPresentModeKHR(present_mode));
@@ -119,7 +119,7 @@ namespace Engine::Vulkan {
     }
 
     VkExtent2D Swapchain::GetSwapExtent() {
-        const VkSurfaceCapabilitiesKHR& surface_capabilities = device_.swapchain_support_details().capabilities;
+        const VkSurfaceCapabilitiesKHR& surface_capabilities = device_.get_swapchain_support_properties().capabilities;
 
         if (surface_capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
             return surface_capabilities.currentExtent;
