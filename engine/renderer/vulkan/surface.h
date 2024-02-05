@@ -1,8 +1,8 @@
 #ifndef VULKAN_STUFF_SURFACE_H
 #define VULKAN_STUFF_SURFACE_H
 
-#include "Instance.h"
-#include "Utils.h"
+#include "instance.h"
+#include "utils.h"
 
 #include <vulkan/vulkan.h>
 #include <SDL2/SDL_vulkan.h>

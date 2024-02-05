@@ -1,9 +1,10 @@
 #ifndef VULKAN_STUFF_SWAPCHAIN_H
 #define VULKAN_STUFF_SWAPCHAIN_H
 
-#include "VulkanRenderer/Device/Device.h"
-#include "../Window.h"
-#include "Utils.h"
+#include "renderer/vulkan/device/device.h"
+#include "window.h"
+#include "utils.h"
+#include "renderer/vulkan/graphics_pipeline.h"
 
 #include <spdlog/spdlog.h>
 
@@ -13,14 +14,24 @@ namespace Engine::Vulkan {
 
     class Swapchain {
     public:
+        // Set width and height based on window and device specs
         Swapchain(Device &device, Instance &instance, Surface &surface, Window &window);
+
+        // Explicitly set width and height
+
+
+        void Destroy();
 
         // Accessors
         VkExtent2D extent();
         VkFormat image_format();
         std::vector<VkImageView>& image_views();
 
-        void Destroy();
+        // initializes framebuffers
+        void CreateFramebuffers(VkRenderPass render_pass);
+        bool AcquireNextImage();
+        bool Resize();
+
 
     private:
         Device& device_;
@@ -35,8 +46,10 @@ namespace Engine::Vulkan {
         VkFormat image_format_;
         std::vector<VkImage> swapchain_images_;
         std::vector<VkImageView> swapchain_image_views_;
+        std::vector<VkFramebuffer> swapchain_frame_buffers_;
 
         // Internal
+        void InitSwapchain(bool use_window_dims);
         VkSurfaceFormatKHR OptimalFormat();
         VkPresentModeKHR OptimalPresentMode();
         VkExtent2D GetSwapExtent();

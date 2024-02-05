@@ -1,5 +1,6 @@
-#include "Engine/Window.h"
-#include "Engine/VulkanRenderer/Renderer.h"
+#include "engine/window.h"
+#include "engine/renderer/vulkan/vk_renderer.h"
+#include "engine/renderer/renderer.h"
 
 #include <spdlog/spdlog.h>
 
@@ -20,13 +21,7 @@ int main() {
         W_HEIGHT
     };
 
-    bool validation_layers_enabled = true;
-    Engine::Vulkan::Renderer renderer{
-        "app name",
-        "engine name",
-        window,
-        validation_layers_enabled
-    };
+    Engine::Renderer renderer{window,  Engine::BackendType::VULKAN, "hi world LOL"};
 
     while(!window.requested_quit()) {
         window.PollEvents();

@@ -1,4 +1,4 @@
-//#include "VulkanRenderer.h"
+//#include "renderer.h"
 //#include "Utils.h"
 //#include "vulkan/vulkan.hpp"
 //#include "vulkan/vulkan_enums.hpp"
@@ -18,12 +18,12 @@
 //
 //using namespace vk;
 //
-//VulkanRenderer::VulkanRenderer() = default;
-//VulkanRenderer::~VulkanRenderer() {
+//renderer::renderer() = default;
+//renderer::~renderer() {
 //    cleanup();
 //};
 //
-//Result VulkanRenderer::init(SDL_Window* windowTarget) {
+//Result renderer::init(SDL_Window* windowTarget) {
 //
 //    sdl_window_ = windowTarget;
 //
@@ -36,13 +36,13 @@
 //    return Result::eSuccess;
 //}
 //
-//void VulkanRenderer::createInstance() {
+//void renderer::createInstance() {
 //
 //    ApplicationInfo appInfo{};
 //    appInfo.sType = vk::StructureType::eApplicationInfo;
 //    appInfo.pApplicationName = "Vulkan app woo";
 //    appInfo.applicationVersion = vk::makeApiVersion(1, 0, 0, 0);
-//    appInfo.pEngineName = "No Engine";
+//    appInfo.pEngineName = "No engine";
 //    appInfo.engineVersion = vk::makeApiVersion(1, 0, 0, 0);
 //    appInfo.apiVersion = vk::ApiVersion13;
 //
@@ -87,7 +87,7 @@
 //    }
 //}
 //
-//void VulkanRenderer::initDevice() {
+//void renderer::initDevice() {
 //
 //    unsigned int count;
 //    instance_.enumeratePhysicalDevices(&count, nullptr);
@@ -171,7 +171,7 @@
 //
 //}
 //
-//void VulkanRenderer::createSurface() {
+//void renderer::createSurface() {
 //    VkSurfaceKHR surfaceKhr;
 //
 //    SDL_bool res = SDL_Vulkan_CreateSurface(sdl_window_, instance_, &surfaceKhr);
@@ -183,7 +183,7 @@
 //    surface = SurfaceKHR(surfaceKhr);
 //}
 //
-//bool VulkanRenderer::validateDevice(PhysicalDevice vk_device) {
+//bool renderer::validateDevice(PhysicalDevice vk_device) {
 //    PhysicalDeviceProperties properties = vk_device.getProperties();
 //    PhysicalDeviceFeatures features = vk_device.getFeatures();
 //
@@ -196,7 +196,7 @@
 //    return indices.isValid() && extensionsSupported && swapChainValid;
 //}
 //
-//bool VulkanRenderer::instanceExtensionSupport(std::vector<const char *> *extensionNames) {
+//bool renderer::instanceExtensionSupport(std::vector<const char *> *extensionNames) {
 //    bool allSupported = true;
 //
 //    // grab supported extension properties.
@@ -223,7 +223,7 @@
 //    return allSupported;
 //}
 //
-//bool VulkanRenderer::deviceExtensionSupport(PhysicalDevice vk_device) {
+//bool renderer::deviceExtensionSupport(PhysicalDevice vk_device) {
 //    unsigned int extensionCount;
 //
 //    vk_device.enumerateDeviceExtensionProperties(nullptr, &extensionCount, nullptr);
@@ -257,7 +257,7 @@
 //    return true;
 //}
 //
-//QueueFamilyIndices VulkanRenderer::getQueueFamilies(PhysicalDevice vk_device) {
+//QueueFamilyIndices renderer::getQueueFamilies(PhysicalDevice vk_device) {
 //    QueueFamilyIndices indices{};
 //
 //    unsigned int qFamilyCount;
@@ -290,7 +290,7 @@
 //    return indices;
 //}
 //
-//void VulkanRenderer::createSwapchain() {
+//void renderer::createSwapchain() {
 //    SwapChainDetails scDetails = getSwapChainDetails(mainDevice.physical);
 //
 //    SurfaceFormatKHR format = getOptimalSurfaceFormat(scDetails.formats);
@@ -351,7 +351,7 @@
 //    logger.debug("Create swapchain");
 //}
 //
-//SwapChainDetails VulkanRenderer::getSwapChainDetails(PhysicalDevice vk_device) {
+//SwapChainDetails renderer::getSwapChainDetails(PhysicalDevice vk_device) {
 //
 //    SwapChainDetails details{};
 //    // -- GRAB CAPABILITIES --
@@ -372,7 +372,7 @@
 //    return details;
 //}
 //
-//SurfaceFormatKHR VulkanRenderer::getOptimalSurfaceFormat(const vector<SurfaceFormatKHR> &formats) {
+//SurfaceFormatKHR renderer::getOptimalSurfaceFormat(const vector<SurfaceFormatKHR> &formats) {
 //    // this means all formats are supported.
 //    if (formats.size() == 1 && formats[0].format == vk::Format::eUndefined) {
 //        // normally the best formats to use
@@ -391,7 +391,7 @@
 //    return formats[0];
 //}
 //
-//PresentModeKHR VulkanRenderer::getOptimalPresentationMode(const vector<vk::PresentModeKHR> &presentModes) {
+//PresentModeKHR renderer::getOptimalPresentationMode(const vector<vk::PresentModeKHR> &presentModes) {
 //
 //    for (const auto &mode : presentModes) {
 //        // find the ones that are regarded as optimal
@@ -404,7 +404,7 @@
 //    return vk::PresentModeKHR::eFifo;
 //}
 //
-//Extent2D VulkanRenderer::getSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities) {
+//Extent2D renderer::getSwapExtent(const SurfaceCapabilitiesKHR& surfaceCapabilities) {
 //    Extent2D currentExtent = surfaceCapabilities.currentExtent;
 //
 //    // vulkan docs says if its equal to the max of uint32, it's of variable size.
@@ -427,7 +427,7 @@
 //
 //}
 //
-//void VulkanRenderer::cleanup() {
+//void renderer::cleanup() {
 //    vkDestroySurfaceKHR(instance_, surface, nullptr);
 //    vkDestroyDevice(mainDevice.logical, nullptr);
 //

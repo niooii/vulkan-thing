@@ -1,4 +1,4 @@
-#include "PhysicalDevice.h"
+#include "physical_device.h"
 
 namespace Engine::Vulkan {
 

@@ -1,12 +1,12 @@
 #ifndef VULKAN_STUFF_DEVICE_H
 #define VULKAN_STUFF_DEVICE_H
 
-#include "VulkanRenderer/Instance.h"
-#include "VulkanRenderer/Surface.h"
-#include "Utils.h"
-#include "QueueFamilyIndices.h"
-#include "SwapchainSupportedProperties.h"
-#include "PhysicalDevice.h"
+#include "../instance.h"
+#include "../surface.h"
+#include "utils.h"
+#include "queue_family_indices.h"
+#include "swapchain_supported_properties.h"
+#include "physical_device.h"
 
 #include "spdlog/spdlog.h"
 

@@ -12,10 +12,10 @@
 //
 //using namespace vk;
 //
-//class VulkanRenderer {
+//class renderer {
 //public:
-//  VulkanRenderer();
-//  ~VulkanRenderer();
+//  renderer();
+//  ~renderer();
 //
 //  Result init(SDL_Window *windowTarget);
 //
@@ -26,7 +26,7 @@
 //  Instance instance_;
 //  struct {
 //    PhysicalDevice physical;
-//    Device logical;
+//    device logical;
 //  } mainDevice;
 //
 //  SurfaceKHR surface;

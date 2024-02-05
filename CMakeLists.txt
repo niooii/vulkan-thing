@@ -62,33 +62,40 @@ find_package(Vulkan REQUIRED)
 
 add_executable(vulkan_stuff
 main.cpp
-        Engine/Window.cpp
-        Engine/Window.h
+        engine/window.cpp
+        engine/window.h
         VulkanRenderer.cpp
         VulkanRenderer.h
-        Engine/VulkanRenderer/Renderer.cpp
-        Engine/VulkanRenderer/Renderer.h
-        Engine/VulkanRenderer/Renderer.h
-        Engine/VulkanRenderer/Device/Device.cpp
-        Engine/VulkanRenderer/Device/Device.h
-        Engine/VulkanRenderer/Device/Device.h
-        Engine/VulkanRenderer/Instance.cpp
-        Engine/VulkanRenderer/Instance.h
-        Engine/VulkanRenderer/Swapchain.cpp
-        Engine/VulkanRenderer/Swapchain.h
-        Engine/VulkanRenderer/Surface.cpp
-        Engine/VulkanRenderer/Surface.h
-        Engine/VulkanRenderer/GraphicsPipeline.cpp
-        Engine/VulkanRenderer/GraphicsPipeline.h
-        Engine/Utils.cpp
-        Engine/Utils.h
-        Engine/VulkanRenderer/Device/DeviceUtils.h
-        Engine/VulkanRenderer/Device/DeviceUtils.h
-        Engine/VulkanRenderer/Device/PhysicalDevice.cpp
-        Engine/VulkanRenderer/Device/PhysicalDevice.h
-        Engine/VulkanRenderer/Device/PhysicalDevice.h
-        Engine/VulkanRenderer/Device/QueueFamilyIndices.h
-        Engine/VulkanRenderer/Device/SwapchainSupportedProperties.h
+        engine/renderer/vulkan/vk_renderer.cpp
+        engine/renderer/vulkan/vk_renderer.h
+        engine/renderer/vulkan/vk_renderer.h
+        engine/renderer/vulkan/device/device.cpp
+        engine/renderer/vulkan/device/device.h
+        engine/renderer/vulkan/device/device.h
+        engine/renderer/vulkan/instance.cpp
+        engine/renderer/vulkan/instance.h
+        engine/renderer/vulkan/swapchain/swapchain.cpp
+        engine/renderer/vulkan/swapchain/swapchain.h
+        engine/renderer/vulkan/surface.cpp
+        engine/renderer/vulkan/surface.h
+        engine/renderer/vulkan/graphics_pipeline.cpp
+        engine/renderer/vulkan/graphics_pipeline.h
+        engine/utils.cpp
+        engine/utils.h
+        engine/renderer/vulkan/device/device_utils.h
+        engine/renderer/vulkan/device/device_utils.h
+        engine/renderer/vulkan/device/physical_device.cpp
+        engine/renderer/vulkan/device/physical_device.h
+        engine/renderer/vulkan/device/physical_device.h
+        engine/renderer/vulkan/device/queue_family_indices.h
+        engine/renderer/vulkan/device/swapchain_supported_properties.h
+        engine/core/clock.cpp
+        engine/core/clock.h
+        engine/defines.h
+        engine/renderer/renderer_interface.h
+        engine/renderer/renderer.cpp
+        engine/renderer/renderer.h
+        engine/renderer/types.h
 )
 
 # add_dependencies(vulkan_stuff Shaders)
@@ -103,9 +110,9 @@ endif()
 message(${Vulkan_INCLUDE_DIRS})
 
 target_include_directories(vulkan_stuff PRIVATE ${Vulkan_INCLUDE_DIRS})
-#target_include_directories(vulkan_stuff PRIVATE ${PROJECT_SOURCE_DIR}/Engine)
+#target_include_directories(vulkan_stuff PRIVATE ${PROJECT_SOURCE_DIR}/engine)
 
-set(engine_dir "${PROJECT_SOURCE_DIR}/Engine/")
+set(engine_dir "${PROJECT_SOURCE_DIR}/engine/")
 target_include_directories(vulkan_stuff PRIVATE "${engine_dir}")
 # include the fmt stuff for spdlog holy shit
 target_include_directories(vulkan_stuff PRIVATE "${engine_dir}")

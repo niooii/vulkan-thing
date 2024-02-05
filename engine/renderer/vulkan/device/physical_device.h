@@ -1,9 +1,9 @@
-#ifndef VULKAN_STUFF_PHYSICALDEVICE_H
-#define VULKAN_STUFF_PHYSICALDEVICE_H
+#ifndef VULKAN_STUFF_PHYSICAL_DEVICE_H
+#define VULKAN_STUFF_PHYSICAL_DEVICE_H
 
-#include "VulkanRenderer/Surface.h"
-#include "QueueFamilyIndices.h"
-#include "SwapchainSupportedProperties.h"
+#include <renderer/vulkan/surface.h>
+#include "queue_family_indices.h"
+#include "swapchain_supported_properties.h"
 
 #include <set>
 

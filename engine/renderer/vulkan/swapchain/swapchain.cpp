@@ -1,4 +1,4 @@
-#include "Swapchain.h"
+#include "swapchain.h"
 
 namespace Engine::Vulkan {
 
@@ -61,7 +61,7 @@ namespace Engine::Vulkan {
         VkResult res = vkCreateSwapchainKHR(device.vk_device(), &sc_create_info, nullptr, &vk_swapchain_);
 
         if(res != VK_SUCCESS) {
-            spdlog::error("Swapchain initialize error: {}", string_VkResult(res));
+            spdlog::error("swapchain initialize error: {}", string_VkResult(res));
             throw std::runtime_error("Failed to create swapchain.");
         }
 
@@ -71,19 +71,48 @@ namespace Engine::Vulkan {
         CreateImageViews();
     }
 
+    void Swapchain::Destroy() {
+        for(const auto& image_view : swapchain_image_views_) {
+            vkDestroyImageView(device_.vk_device(), image_view, nullptr);
+        }
+        for(const auto& frame_buffer : swapchain_frame_buffers_) {
+            vkDestroyFramebuffer(device_.vk_device(), frame_buffer, nullptr);
+        }
+
+        vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
+    }
+
     VkExtent2D Swapchain::extent() {
-        return extent_; 
+        return extent_;
     }
 
     VkFormat Swapchain::image_format() {
         return image_format_;
     }
 
-    void Swapchain::Destroy() {
-        for(const auto& image_view : swapchain_image_views_) {
-            vkDestroyImageView(device_.vk_device(), image_view, nullptr);
+    std::vector<VkImageView>& Swapchain::image_views() {
+        return swapchain_image_views_;
+    }
+
+    void Swapchain::CreateFramebuffers(VkRenderPass render_pass) {
+        swapchain_frame_buffers_.resize(swapchain_image_views_.size());
+
+        for (size_t i = 0; i < swapchain_image_views_.size(); i++) {
+            VkImageView attachments[] = {
+                    swapchain_image_views_[i]
+            };
+
+            VkFramebufferCreateInfo framebufferInfo{};
+            framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+            framebufferInfo.renderPass = render_pass;
+            framebufferInfo.attachmentCount = 1;
+            framebufferInfo.pAttachments = attachments;
+            framebufferInfo.width = extent_.width;
+            framebufferInfo.height = extent_.height;
+            framebufferInfo.layers = 1;
+
+            Utils::ExpectBadResult("Failed to create framebuffers.", vkCreateFramebuffer(device_.vk_device(), &framebufferInfo, nullptr, &swapchain_frame_buffers_[i]));
         }
-        vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
     }
 
     // Internal

@@ -1,4 +1,4 @@
-#include "Surface.h"
+#include "surface.h"
 
 namespace Engine::Vulkan {
 

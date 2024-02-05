@@ -1,8 +1,8 @@
 #ifndef VULKAN_STUFF_INSTANCE_H
 #define VULKAN_STUFF_INSTANCE_H
 
-#include "../Window.h"
-#include "Utils.h"
+#include "window.h"
+#include "utils.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_vulkan.h>

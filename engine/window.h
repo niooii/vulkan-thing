@@ -10,7 +10,7 @@
 #include <SDL.h>
 
 namespace Engine {
-    // Window should not outlive Renderer
+    // Window should not outlive RendererBackend
     class Window {
     public:
         Window(const char *name, int x, int y, int w, int h);

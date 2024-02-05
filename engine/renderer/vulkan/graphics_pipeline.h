@@ -1,16 +1,22 @@
-#ifndef VULKAN_STUFF_GRAPHICSPIPELINE_H
-#define VULKAN_STUFF_GRAPHICSPIPELINE_H
+#ifndef VULKAN_STUFF_GRAPHICS_PIPELINE_H
+#define VULKAN_STUFF_GRAPHICS_PIPELINE_H
 
-#include "VulkanRenderer/Device/Device.h"
-#include "Utils.h"
-#include "Swapchain.h"
+#include "renderer/vulkan/device/device.h"
+#include "renderer/vulkan/swapchain/swapchain.h"
+#include "utils.h"
 
 namespace Engine::Vulkan {
+
+    class Swapchain;
 
     class GraphicsPipeline {
     public:
         GraphicsPipeline(Device& device, Swapchain& swapchain);
+
         void Destroy();
+
+        // Accessors
+        VkRenderPass render_pass();
 
     private:
         Device& device_;

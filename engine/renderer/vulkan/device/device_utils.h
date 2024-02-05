@@ -1,11 +1,11 @@
-#ifndef VULKAN_STUFF_DEVICEUTILS_H
-#define VULKAN_STUFF_DEVICEUTILS_H
+#ifndef VULKAN_STUFF_DEVICE_UTILS_H
+#define VULKAN_STUFF_DEVICE_UTILS_H
 
 #include <vector>
 #include <optional>
 #include <vulkan/vulkan.h>
-#include "PhysicalDevice.h"
-#include "VulkanRenderer/Instance.h"
+#include "physical_device.h"
+#include "../instance.h"
 
 namespace Engine::Vulkan {
 
@@ -24,6 +24,8 @@ namespace Engine::Vulkan {
 
             return physical_devices;
         }
+
+
     };
 
 }

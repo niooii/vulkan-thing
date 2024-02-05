@@ -1,5 +1,5 @@
 #include <stdexcept>
-#include "Device.h"
+#include "device.h"
 
 namespace Engine::Vulkan {
 

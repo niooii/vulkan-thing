@@ -2,11 +2,11 @@
 // Created by niooi on 1/30/24.
 //
 
-#include "GraphicsPipeline.h"
+#include "graphics_pipeline.h"
 
 namespace Engine::Vulkan {
 
-    GraphicsPipeline::GraphicsPipeline(Device &device, Swapchain& swapchain) : device_(device), swapchain_(swapchain) {
+    GraphicsPipeline::GraphicsPipeline(Device& device, Swapchain& swapchain) : device_(device), swapchain_(swapchain) {
         std::string_view vert_path{"../Shaders/triangle.vert.spv"};
         std::string_view frag_path{"../Shaders/triangle.frag.spv"};
         vert_shader_module_ = CreateShaderModule(vert_path);
@@ -158,7 +158,7 @@ namespace Engine::Vulkan {
 
         vkCreateGraphicsPipelines(device_.vk_device(), nullptr, 1, &pipeline_info, nullptr, &vk_pipeline_);
 
-        spdlog::debug("GraphicsPipeline initialized.");
+        spdlog::debug("Graphics Pipeline initialized.");
     }
 
     void GraphicsPipeline::Destroy() {
@@ -170,6 +170,10 @@ namespace Engine::Vulkan {
 
         vkDestroyPipeline(device_.vk_device(), vk_pipeline_, nullptr);
         vkDestroyPipelineLayout(device_.vk_device(), vk_pipeline_layout_, nullptr);
+    }
+
+    VkRenderPass GraphicsPipeline::render_pass() {
+        return render_pass_;
     }
 
     VkShaderModule GraphicsPipeline::CreateShaderModule(std::string_view& filename) {
