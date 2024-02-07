@@ -17,6 +17,9 @@ namespace Engine::Vulkan {
         Surface(Instance& instance, Window& window);
         void Destroy();
 
+        Surface(const Surface&) = delete;
+        Surface& operator= (const Surface&) = delete;
+
         // Accessors
         VkSurfaceKHR vk_surface();
 

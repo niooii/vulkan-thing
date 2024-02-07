@@ -18,6 +18,9 @@ namespace Engine::Vulkan {
         Instance(const char* application_name, const char* engine_name, Window &window, bool validation_layers_enabled);
         void Destroy();
 
+        Instance(const Instance&) = delete;
+        Instance& operator= (const Instance&) = delete;
+
         VkInstance vk_instance();
 
     private:

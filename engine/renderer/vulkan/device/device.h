@@ -20,6 +20,9 @@ namespace Engine::Vulkan {
         Device(Instance &instance, Surface &surface, PhysicalDevice& physical_device);
         void Destroy();
 
+        Device(const Device&) = delete;
+        Device& operator= (const Device&) = delete;
+
         // Accessors
         VkDevice vk_device();
         QueueFamilyIndices& get_queue_families();

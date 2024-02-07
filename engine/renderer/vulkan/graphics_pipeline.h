@@ -12,8 +12,10 @@ namespace Engine::Vulkan {
     class GraphicsPipeline {
     public:
         GraphicsPipeline(Device& device, Swapchain& swapchain);
+        ~GraphicsPipeline();
 
-        void Destroy();
+        GraphicsPipeline(const GraphicsPipeline&) = delete;
+        GraphicsPipeline& operator= (const GraphicsPipeline&) = delete;
 
         // Accessors
         VkRenderPass render_pass();

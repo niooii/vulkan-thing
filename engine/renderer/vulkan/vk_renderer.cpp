@@ -5,11 +5,11 @@ namespace Engine::Vulkan {
     VkRenderer::VkRenderer(const char* application_name, Window& window, bool validation_layers_enabled) {
 
         // init instance
-        instance_.emplace(Instance{application_name, "onion engine", window, validation_layers_enabled});
+        instance_.emplace(application_name, "onion engine", window, validation_layers_enabled);
         Instance& instance = instance_.value();
 
         surface_.emplace(
-                Surface(instance, window)
+                instance, window
                 );
         Surface& surface = surface_.value();
 
@@ -18,32 +18,36 @@ namespace Engine::Vulkan {
         assert(!physical_devices.empty());
 
         device_.emplace(
-                Device(instance, surface, physical_devices[0])
+                instance, surface, physical_devices[0]
                 );
         Device& device = device_.value();
 
         swapchain_.emplace(
-                Swapchain(device, instance, surface, window)
+                device, instance, surface, window
                 );
         Swapchain& swapchain = swapchain_.value();
 
         graphics_pipeline_.emplace(
-                GraphicsPipeline(device, swapchain)
+                /// may havae to remove
+                device, swapchain
                 );
         GraphicsPipeline& graphics_pipeline = graphics_pipeline_.value();
         swapchain.CreateFramebuffers(graphics_pipeline.render_pass());
 
-
+        cmd_recorder_.emplace(
+                device, swapchain, graphics_pipeline
+                );
+        CommandBufferRecorder& cmd_recorder = cmd_recorder_.value();
 
         spdlog::info("Finished renderer initialization.");
     }
 
     VkRenderer::~VkRenderer() {
-        graphics_pipeline_.value().Destroy();
-        swapchain_.value().Destroy();
-        device_.value().Destroy();
-        surface_.value().Destroy();
-        instance_.value().Destroy();
+//        graphics_pipeline_.value().Destroy();
+//        swapchain_.value().Destroy();
+//        device_.value().Destroy();
+//        surface_.value().Destroy();
+//        instance_.value().Destroy();
     }
 
     void VkRenderer::Resize(u16 w, u16 h) {

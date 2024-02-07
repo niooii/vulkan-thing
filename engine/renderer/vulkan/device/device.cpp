@@ -41,7 +41,7 @@ namespace Engine::Vulkan {
     }
 
     void Device::Destroy() {
-        vkDestroyDevice(vk_logical_, nullptr);
+
     }
 
     VkDevice Device::vk_device() {

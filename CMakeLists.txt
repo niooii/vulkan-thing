@@ -96,6 +96,11 @@ main.cpp
         engine/renderer/renderer.cpp
         engine/renderer/renderer.h
         engine/renderer/types.h
+        engine/math/Vector2.cpp
+        engine/math/Vector2.h
+        engine/math/Vector2.h
+        engine/renderer/vulkan/buffers/CommandBufferRecorder.cpp
+        engine/renderer/vulkan/buffers/CommandBufferRecorder.h
 )
 
 # add_dependencies(vulkan_stuff Shaders)

@@ -115,6 +115,11 @@ namespace Engine::Vulkan {
         }
     }
 
+    bool Swapchain::AcquireNextImage() {
+//        vkAcquireNextImageKHR(device_.vk_device(), vk_swapchain_, 3000000000000,
+//                              semaphore, fence, idx);
+    }
+    
     // Internal
     VkSurfaceFormatKHR Swapchain::OptimalFormat() {
         const auto &available_formats = device_.get_swapchain_support_properties().formats;

@@ -16,11 +16,12 @@ namespace Engine::Vulkan {
     public:
         // Set width and height based on window and device specs
         Swapchain(Device &device, Instance &instance, Surface &surface, Window &window);
-
-        // Explicitly set width and height
-
-
         void Destroy();
+
+        Swapchain(const Swapchain&) = delete;
+        Swapchain& operator= (const Swapchain&) = delete;
+
+        // TODO! Explicitly set width and height
 
         // Accessors
         VkExtent2D extent();

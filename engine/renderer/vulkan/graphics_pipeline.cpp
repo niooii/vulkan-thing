@@ -1,7 +1,3 @@
-//
-// Created by niooi on 1/30/24.
-//
-
 #include "graphics_pipeline.h"
 
 namespace Engine::Vulkan {
@@ -158,10 +154,12 @@ namespace Engine::Vulkan {
 
         vkCreateGraphicsPipelines(device_.vk_device(), nullptr, 1, &pipeline_info, nullptr, &vk_pipeline_);
 
+        VkDebugUtilsMessengerCreateInfoEXT dumci{};
+
         spdlog::debug("Graphics Pipeline initialized.");
     }
 
-    void GraphicsPipeline::Destroy() {
+    GraphicsPipeline::~GraphicsPipeline() {
         // TODO! replace with destroy all shader modules later
         vkDestroyShaderModule(device_.vk_device(), vert_shader_module_, nullptr);
         vkDestroyShaderModule(device_.vk_device(), frag_shader_module_, nullptr);

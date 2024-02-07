@@ -15,6 +15,9 @@ namespace Engine {
         Renderer(Window& window, BackendType renderer_backend, const char* app_name);
        ~Renderer();
 
+       Renderer(const Renderer&) = delete;
+       Renderer& operator= (Renderer&) = delete;
+
        bool DrawFrame();
 
     private:

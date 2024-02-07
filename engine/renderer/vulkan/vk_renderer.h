@@ -9,6 +9,7 @@
 #include "device/device_utils.h"
 #include "utils.h"
 #include <renderer/renderer_interface.h>
+#include <renderer/vulkan/buffers/CommandBufferRecorder.h>
 
 #include <vulkan/vulkan.h>
 #include <spdlog/spdlog.h>
@@ -23,6 +24,9 @@ namespace Engine::Vulkan {
         VkRenderer(const char* application_name, Window &window, bool validation_layers_enabled);
         // Destroys all resources in *deliberate* order.
         ~VkRenderer() override;
+
+        VkRenderer(const VkRenderer&) = delete;
+        VkRenderer& operator= (VkRenderer&) = delete;
 
         // override rendering backend
 
@@ -40,6 +44,7 @@ namespace Engine::Vulkan {
         std::optional<Device> device_;
         std::optional<Swapchain> swapchain_;
         std::optional<GraphicsPipeline> graphics_pipeline_;
+        std::optional<CommandBufferRecorder> cmd_recorder_;
     };
 
 }
