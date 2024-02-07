@@ -50,8 +50,9 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan instance has been initialized.");
     }
 
-    void Instance::Destroy() {
+    Instance::~Instance() {
         vkDestroyInstance(vk_instance_, nullptr);
+        spdlog::debug("Vulkan instance destroyed.");
     }
 
     VkInstance Instance::vk_instance() {

@@ -43,11 +43,7 @@ namespace Engine::Vulkan {
     }
 
     VkRenderer::~VkRenderer() {
-//        graphics_pipeline_.value().Destroy();
-//        swapchain_.value().Destroy();
-//        device_.value().Destroy();
-//        surface_.value().Destroy();
-//        instance_.value().Destroy();
+        spdlog::info("Shutting down renderer...");
     }
 
     void VkRenderer::Resize(u16 w, u16 h) {

@@ -71,7 +71,7 @@ namespace Engine::Vulkan {
         CreateImageViews();
     }
 
-    void Swapchain::Destroy() {
+    Swapchain::~Swapchain() {
         for(const auto& image_view : swapchain_image_views_) {
             vkDestroyImageView(device_.vk_device(), image_view, nullptr);
         }
@@ -80,6 +80,8 @@ namespace Engine::Vulkan {
         }
 
         vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
+
+        spdlog::debug("Vulkan swapchain destroyed.");
     }
 
     VkExtent2D Swapchain::extent() {
@@ -92,6 +94,10 @@ namespace Engine::Vulkan {
 
     std::vector<VkImageView>& Swapchain::image_views() {
         return swapchain_image_views_;
+    }
+
+    std::vector<VkFramebuffer>& Swapchain::frame_buffers() {
+        return swapchain_frame_buffers_;
     }
 
     void Swapchain::CreateFramebuffers(VkRenderPass render_pass) {

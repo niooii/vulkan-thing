@@ -12,7 +12,7 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan surface has been initialized.");
     }
 
-    void Surface::Destroy() {
+    Surface::~Surface() {
         vkDestroySurfaceKHR(instance_.vk_instance(), vk_surface_,   nullptr);
     }
 

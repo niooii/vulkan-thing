@@ -1,5 +1,5 @@
-#ifndef VULKAN_STUFF_COMMANDBUFFERRECORDER_H
-#define VULKAN_STUFF_COMMANDBUFFERRECORDER_H
+#ifndef VULKAN_STUFF_COMMAND_BUFFER_RECORDER_H
+#define VULKAN_STUFF_COMMAND_BUFFER_RECORDER_H
 
 #include "renderer/vulkan/device/device.h"
 #include "renderer/vulkan/swapchain/swapchain.h"
@@ -16,7 +16,7 @@ namespace Engine::Vulkan {
         CommandBufferRecorder& operator= (const CommandBufferRecorder&) = delete;
 
         // Record and submit command buffers
-        void RecordCommandBuffers();
+        void RecordCommandBuffers(uint32_t image_index);
 
     private:
         Device& device_;
@@ -24,6 +24,7 @@ namespace Engine::Vulkan {
         GraphicsPipeline& graphics_pipeline_;
 
         VkCommandPool vk_cmd_pool_;
+        VkCommandBuffer vk_buffer;
 
     };
 

@@ -40,8 +40,9 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan device has been initialized.");
     }
 
-    void Device::Destroy() {
-
+    Device::~Device() {
+        vkDestroyDevice(vk_logical_, nullptr);
+        spdlog::debug("Vulkan device destroyed.");
     }
 
     VkDevice Device::vk_device() {

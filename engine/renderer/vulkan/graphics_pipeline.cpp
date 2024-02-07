@@ -168,6 +168,7 @@ namespace Engine::Vulkan {
 
         vkDestroyPipeline(device_.vk_device(), vk_pipeline_, nullptr);
         vkDestroyPipelineLayout(device_.vk_device(), vk_pipeline_layout_, nullptr);
+        spdlog::debug("Vulkan graphics pipeline destroyed");
     }
 
     VkRenderPass GraphicsPipeline::render_pass() {

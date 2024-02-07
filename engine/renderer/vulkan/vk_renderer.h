@@ -9,7 +9,7 @@
 #include "device/device_utils.h"
 #include "utils.h"
 #include <renderer/renderer_interface.h>
-#include <renderer/vulkan/buffers/CommandBufferRecorder.h>
+#include <renderer/vulkan/buffers/command_buffer_recorder.h>
 
 #include <vulkan/vulkan.h>
 #include <spdlog/spdlog.h>

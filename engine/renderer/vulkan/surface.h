@@ -15,7 +15,7 @@ namespace Engine::Vulkan {
     class Surface {
     public:
         Surface(Instance& instance, Window& window);
-        void Destroy();
+        ~Surface();
 
         Surface(const Surface&) = delete;
         Surface& operator= (const Surface&) = delete;

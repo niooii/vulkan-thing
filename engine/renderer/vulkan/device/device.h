@@ -18,7 +18,8 @@ namespace Engine::Vulkan {
     class Device {
     public:
         Device(Instance &instance, Surface &surface, PhysicalDevice& physical_device);
-        void Destroy();
+        ~Device();
+
 
         Device(const Device&) = delete;
         Device& operator= (const Device&) = delete;

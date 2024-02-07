@@ -16,7 +16,7 @@ namespace Engine::Vulkan {
     public:
         // Set width and height based on window and device specs
         Swapchain(Device &device, Instance &instance, Surface &surface, Window &window);
-        void Destroy();
+        ~Swapchain();
 
         Swapchain(const Swapchain&) = delete;
         Swapchain& operator= (const Swapchain&) = delete;
@@ -27,6 +27,7 @@ namespace Engine::Vulkan {
         VkExtent2D extent();
         VkFormat image_format();
         std::vector<VkImageView>& image_views();
+        std::vector<VkFramebuffer>& frame_buffers();
 
         // initializes framebuffers
         void CreateFramebuffers(VkRenderPass render_pass);
