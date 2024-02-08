@@ -5,6 +5,9 @@ set (CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set (CMAKE_CXX_FLAGS_RELEASE "-Ofast")
+set (CMAKE_CXX_FLAGS_DEBUG "-O0")
+
 if (WIN32) 
     set(SDL2_DIR "E:\\SDL2\\SDL2-2.28.5\\cmake")
 #    set(spdlog_DIR "E:\\spdlog\\build")

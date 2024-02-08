@@ -47,7 +47,7 @@ namespace Engine::Vulkan {
 
 //        VkPhysicalDevice vk_physical_;
         VkDevice vk_logical_;
-        std::vector<VkDeviceQueueCreateInfo> GetQueueCreateInfos(QueueFamilyIndices &indices);
+        std::vector<VkDeviceQueueCreateInfo> GetQueueCreateInfos(QueueFamilyIndices &indices, float* graphics_q_prio, float* present_q_prio);
     };
 
 }

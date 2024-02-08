@@ -11,7 +11,9 @@ namespace Engine::Vulkan {
         VkDeviceCreateInfo dev_create_info{};
         dev_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
-        std::vector<VkDeviceQueueCreateInfo> queue_create_infos = GetQueueCreateInfos(queue_family_indices_);
+        float graphics_q_prio{1.0};
+        float present_q_prio{1.0};
+        std::vector<VkDeviceQueueCreateInfo> queue_create_infos = GetQueueCreateInfos(queue_family_indices_, &graphics_q_prio, &present_q_prio);
 
         dev_create_info.pQueueCreateInfos = queue_create_infos.data();
         dev_create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());
@@ -45,22 +47,20 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan device destroyed.");
     }
 
-    std::vector<VkDeviceQueueCreateInfo> Device::GetQueueCreateInfos(QueueFamilyIndices &indices) {
+    std::vector<VkDeviceQueueCreateInfo> Device::GetQueueCreateInfos(QueueFamilyIndices &indices, float* graphics_q_prio, float* present_q_prio) {
         VkDeviceQueueCreateInfo graphics_create_info{};
         graphics_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
         graphics_create_info.queueFamilyIndex = indices.graphics_family.value();
         graphics_create_info.queueCount = 1;
 
-        float graphic_q_prio = 1.0f;
-        graphics_create_info.pQueuePriorities = &graphic_q_prio;
+        graphics_create_info.pQueuePriorities = graphics_q_prio;
 
         VkDeviceQueueCreateInfo present_create_info{};
         present_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
         present_create_info.queueFamilyIndex = indices.present_family.value();
         present_create_info.queueCount = 1;
 
-        float present_q_prio = 1.0f;
-        present_create_info.pQueuePriorities = &present_q_prio;
+        present_create_info.pQueuePriorities = present_q_prio;
 
         return std::vector<VkDeviceQueueCreateInfo> {
             graphics_create_info,
