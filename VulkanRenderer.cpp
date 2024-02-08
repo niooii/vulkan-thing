@@ -67,16 +67,16 @@
 ////    }
 //
 //    Result result;
-//    if ((result = ::createInstance(&createInfo, nullptr, &instance_)) != Result::eSuccess) {
-//        logger.err("Failed to create vulkan instance_. Error: ");
+//    if ((result = ::createInstance(&createInfo, nullptr, &opt_instance_)) != Result::eSuccess) {
+//        logger.err("Failed to create vulkan opt_instance_. Error: ");
 //        logger.err(vk::to_string(result).c_str());
-//        throw std::runtime_error("failed to create instance_!");
+//        throw std::runtime_error("failed to create opt_instance_!");
 //    }
 //
-//    logger.debug("Vulkan instance_ successfully initialized.");
+//    logger.debug("Vulkan opt_instance_ successfully initialized.");
 //
 //    // testing some vk_device stuff
-//    auto devices = instance_.enumeratePhysicalDevices();
+//    auto devices = opt_instance_.enumeratePhysicalDevices();
 //
 //    for(auto& vk_device : devices) {
 //        logger.debug("there is a vk_device. ");
@@ -90,7 +90,7 @@
 //void renderer::initDevice() {
 //
 //    unsigned int count;
-//    instance_.enumeratePhysicalDevices(&count, nullptr);
+//    opt_instance_.enumeratePhysicalDevices(&count, nullptr);
 //
 //    if(count == 0) {
 //        logger.err("No vulkan supported devices found.");
@@ -98,7 +98,7 @@
 //    }
 //
 //    vector<PhysicalDevice> devices{count};
-//    instance_.enumeratePhysicalDevices(&count, devices.data());
+//    opt_instance_.enumeratePhysicalDevices(&count, devices.data());
 //    bool deviceFound{false};
 //    // find first suitable vk_device
 //    for(auto& vk_device : devices) {
@@ -174,7 +174,7 @@
 //void renderer::createSurface() {
 //    VkSurfaceKHR surfaceKhr;
 //
-//    SDL_bool res = SDL_Vulkan_CreateSurface(sdl_window_, instance_, &surfaceKhr);
+//    SDL_bool res = SDL_Vulkan_CreateSurface(sdl_window_, opt_instance_, &surfaceKhr);
 //
 //    if(res == SDL_FALSE) {
 //        throw std::runtime_error("SURFACE FAILED");
@@ -295,7 +295,7 @@
 //
 //    SurfaceFormatKHR format = getOptimalSurfaceFormat(scDetails.formats);
 //    PresentModeKHR presentMode = getOptimalPresentationMode(scDetails.presentationModes);
-//    Extent2D extent = getSwapExtent(scDetails.surfaceCapabilities);
+//    Extent2D vk_extent = getSwapExtent(scDetails.surfaceCapabilities);
 //
 //    // how many images in the swap chain. set +1 than minimum for triple buffering
 //    uint32_t imageCount = scDetails.surfaceCapabilities.minImageCount + 1;
@@ -310,7 +310,7 @@
 //
 //    createInfo.sType = vk::StructureType::eSwapchainCreateInfoKHR;
 //    createInfo.presentMode = presentMode;
-//    createInfo.imageExtent = extent;
+//    createInfo.imageExtent = vk_extent;
 //    createInfo.imageFormat = format.format;
 //    createInfo.imageColorSpace = format.colorSpace;
 //    createInfo.minImageCount = imageCount;
@@ -414,24 +414,24 @@
 //
 //    int w, h;
 //    SDL_GetWindowSize(sdl_window_, &w, &h);
-//    Extent2D extent = Extent2D{static_cast<uint32_t>(w), static_cast<uint32_t>(h)};
+//    Extent2D vk_extent = Extent2D{static_cast<uint32_t>(w), static_cast<uint32_t>(h)};
 //
 //    // clamp based on max and min value
-//    extent.width = std::min(extent.width, surfaceCapabilities.maxImageExtent.width);
-//    extent.height = std::min(extent.height, surfaceCapabilities.maxImageExtent.height);
+//    extent.width = std::min(vk_extent.width, surfaceCapabilities.maxImageExtent.width);
+//    extent.height = std::min(vk_extent.height, surfaceCapabilities.maxImageExtent.height);
 //
-//    extent.width = std::max(extent.width, surfaceCapabilities.minImageExtent.width);
-//    extent.height = std::max(extent.height, surfaceCapabilities.minImageExtent.height);
+//    extent.width = std::max(vk_extent.width, surfaceCapabilities.minImageExtent.width);
+//    vk_extent.height = std::max(extent.height, surfaceCapabilities.minImageExtent.height);
 //
-//    return extent;
+//    return vk_extent;
 //
 //}
 //
 //void renderer::cleanup() {
-//    vkDestroySurfaceKHR(instance_, surface, nullptr);
+//    vkDestroySurfaceKHR(opt_instance_, surface, nullptr);
 //    vkDestroyDevice(mainDevice.logical, nullptr);
 //
-//    vkDestroyInstance(instance_, nullptr);
+//    vkDestroyInstance(opt_instance_, nullptr);
 //}
 //
 //

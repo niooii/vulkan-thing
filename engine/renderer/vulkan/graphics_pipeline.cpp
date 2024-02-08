@@ -45,14 +45,14 @@ namespace Engine::Vulkan {
         VkViewport viewport{};
         viewport.x = 0.0f;
         viewport.y = 0.0f;
-        viewport.width = (float) swapchain_.extent().width;
-        viewport.height = (float) swapchain_.extent().height;
+        viewport.width = (float) swapchain_.vk_extent().width;
+        viewport.height = (float) swapchain_.vk_extent().height;
         viewport.minDepth = 0.0f;
         viewport.maxDepth = 1.0f;
 
         VkRect2D scissor{};
         scissor.offset = {0, 0};
-        scissor.extent = swapchain_.extent();
+        scissor.extent = swapchain_.vk_extent();
 
         std::vector<VkDynamicState> dynamic_states = {
                 VK_DYNAMIC_STATE_VIEWPORT,
@@ -189,7 +189,7 @@ namespace Engine::Vulkan {
 
     VkRenderPass GraphicsPipeline::CreateRenderPass() {
         VkAttachmentDescription color_attachment{};
-        color_attachment.format = swapchain_.image_format();
+        color_attachment.format = swapchain_.vk_image_format();
         color_attachment.samples = VK_SAMPLE_COUNT_1_BIT;
 
         color_attachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;

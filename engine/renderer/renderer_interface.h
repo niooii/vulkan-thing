@@ -16,6 +16,9 @@ namespace Engine {
 
         // If successful, return true
         virtual bool EndFrame(f32 delta_time) = 0;
+
+        // TODO! remove later
+        virtual void DrawFrame() = 0;
     };
 
 }

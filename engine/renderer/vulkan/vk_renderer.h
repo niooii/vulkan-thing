@@ -20,7 +20,7 @@ namespace Engine::Vulkan {
 
     class VkRenderer : public RendererInterface {
     public:
-        // The parameters passed in are used to create the underlying Vulkan instance_.
+        // The parameters passed in are used to create the underlying Vulkan opt_instance_.
         VkRenderer(const char* application_name, Window &window, bool validation_layers_enabled);
         // Destroys all resources in *deliberate* order.
         ~VkRenderer() override;
@@ -38,13 +38,23 @@ namespace Engine::Vulkan {
         // If successful, return true
         bool EndFrame(f32 delta_time) override;
 
+        void DrawFrame() override;
+
     private:
-        std::optional<Instance> instance_;
-        std::optional<Surface> surface_;
-        std::optional<Device> device_;
-        std::optional<Swapchain> swapchain_;
-        std::optional<GraphicsPipeline> graphics_pipeline_;
-        std::optional<CommandBufferRecorder> cmd_recorder_;
+        std::optional<Instance> opt_instance_;
+        std::optional<Surface> opt_surface_;
+        std::optional<Device> opt_device_;
+        std::optional<Swapchain> opt_swapchain_;
+        std::optional<GraphicsPipeline> opt_graphics_pipeline_;
+        std::optional<CommandBufferRecorder> opt_cmd_recorder_;
+
+        // workaround late initialization
+        Instance* instance_;
+        Surface* surface_;
+        Device* device_;
+        Swapchain* swapchain_;
+        GraphicsPipeline* graphics_pipeline_;
+        CommandBufferRecorder* cmd_recorder_;
     };
 
 }

@@ -9,16 +9,16 @@ namespace Engine::Vulkan {
 
         VkSurfaceFormatKHR optimal_format = OptimalFormat();
 
-        extent_ = GetSwapExtent();
-        image_format_ = optimal_format.format;
+        vk_extent_ = GetSwapExtent();
+        vk_image_format_ = optimal_format.format;
 
         VkSwapchainCreateInfoKHR sc_create_info{};
 
         sc_create_info.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-        sc_create_info.imageFormat = image_format_;
+        sc_create_info.imageFormat = vk_image_format_;
         sc_create_info.imageColorSpace = optimal_format.colorSpace;
         sc_create_info.presentMode = OptimalPresentMode();
-        sc_create_info.imageExtent = extent_;
+        sc_create_info.imageExtent = vk_extent_;
 
         sc_create_info.surface = surface.vk_surface();
 
@@ -69,6 +69,23 @@ namespace Engine::Vulkan {
 
         CreateImages();
         CreateImageViews();
+
+        // TODO! CREATE SYNC OBJECTS, REFACTOR LATER
+        VkSemaphoreCreateInfo semaphore_info{};
+        semaphore_info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+        VkFenceCreateInfo fence_info{};
+        fence_info.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+
+        Utils::ExpectBadResult("Failed to create semaphore", vkCreateSemaphore(
+                device.vk_device(), &semaphore_info, nullptr, &vk_image_available_semaphore_
+                ));
+        Utils::ExpectBadResult("Failed to create semaphore", vkCreateSemaphore(
+                device.vk_device(), &semaphore_info, nullptr, &vk_render_finished_semaphore_
+                ));
+        Utils::ExpectBadResult("Failed to create fence", vkCreateFence(
+                device.vk_device(), &fence_info, nullptr, &vk_inflight_fence_
+                ));
     }
 
     Swapchain::~Swapchain() {
@@ -80,6 +97,25 @@ namespace Engine::Vulkan {
         }
 
         vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
+
+        // TODO! DESTROY SYNC OBJECTS, REFACTOR LATER
+
+        vkDestroySemaphore(
+                device_.vk_device(),
+                vk_image_available_semaphore_,
+                nullptr
+                );
+        vkDestroySemaphore(
+                device_.vk_device(),
+                vk_render_finished_semaphore_,
+                nullptr
+                );
+        vkDestroyFence(
+                device_.vk_device(),
+                vk_inflight_fence_,
+                nullptr
+                );
+
 
         spdlog::debug("Vulkan swapchain destroyed.");
     }
@@ -97,18 +133,22 @@ namespace Engine::Vulkan {
             framebufferInfo.renderPass = render_pass;
             framebufferInfo.attachmentCount = 1;
             framebufferInfo.pAttachments = attachments;
-            framebufferInfo.width = extent_.width;
-            framebufferInfo.height = extent_.height;
+            framebufferInfo.width = vk_extent_.width;
+            framebufferInfo.height = vk_extent_.height;
             framebufferInfo.layers = 1;
 
             Utils::ExpectBadResult("Failed to create framebuffers.", vkCreateFramebuffer(device_.vk_device(), &framebufferInfo, nullptr, &swapchain_frame_buffers_[i]));
         }
     }
 
-    bool Swapchain::AcquireNextImage() {
-//        vkAcquireNextImageKHR(device_.vk_device(), vk_swapchain_, 3000000000000,
-//                              semaphore, fence, idx);
-
+    uint32_t Swapchain::AcquireNextImageIdx() {
+        uint32_t idx;
+        Utils::ExpectBadResult(
+                "Failed to fetch next image idx from swapchain",
+                vkAcquireNextImageKHR(device_.vk_device(), vk_swapchain_, 3000000000000,
+                                      vk_image_available_semaphore_, VK_NULL_HANDLE, &idx)
+                );
+        return idx;
     }
     
     // Internal
@@ -183,7 +223,7 @@ namespace Engine::Vulkan {
         VkImageViewCreateInfo create_info{};
         create_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
         create_info.viewType = VK_IMAGE_VIEW_TYPE_2D;
-        create_info.format = image_format_;
+        create_info.format = vk_image_format_;
 
         create_info.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
         create_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;

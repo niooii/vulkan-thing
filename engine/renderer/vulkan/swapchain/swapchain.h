@@ -24,22 +24,34 @@ namespace Engine::Vulkan {
         // TODO! Explicitly set width and height
 
         // Accessors
-        inline VkExtent2D extent() {
-            return extent_;
+        inline VkSwapchainKHR vk_swapchain() {
+            return vk_swapchain_;
         }
-        inline VkFormat image_format() {
-            return image_format_;
+        inline VkExtent2D vk_extent() {
+            return vk_extent_;
         }
-        inline std::vector<VkImageView>& image_views() {
+        inline VkFormat vk_image_format() {
+            return vk_image_format_;
+        }
+        inline std::vector<VkImageView>& vk_image_views() {
             return swapchain_image_views_;
         }
-        inline std::vector<VkFramebuffer>& frame_buffers() {
+        inline std::vector<VkFramebuffer>& vk_frame_buffers() {
             return swapchain_frame_buffers_;
+        }
+        inline VkSemaphore vk_image_available_sempahore() {
+            return vk_image_available_semaphore_;
+        }
+        inline VkSemaphore vk_render_finished_semaphore() {
+            return vk_render_finished_semaphore_;
+        }
+        inline VkFence vk_inflight_fence() {
+            return vk_inflight_fence_;
         }
 
         // initializes framebuffers
         void CreateFramebuffers(VkRenderPass render_pass);
-        bool AcquireNextImage();
+        uint32_t AcquireNextImageIdx();
         bool Resize();
 
 
@@ -52,11 +64,14 @@ namespace Engine::Vulkan {
         VkSwapchainKHR vk_swapchain_;
 
         // Attributes
-        VkExtent2D extent_;
-        VkFormat image_format_;
+        VkExtent2D vk_extent_;
+        VkFormat vk_image_format_;
         std::vector<VkImage> swapchain_images_;
         std::vector<VkImageView> swapchain_image_views_;
         std::vector<VkFramebuffer> swapchain_frame_buffers_;
+        VkSemaphore vk_image_available_semaphore_;
+        VkSemaphore vk_render_finished_semaphore_;
+        VkFence vk_inflight_fence_;
 
         // Internal
         void InitSwapchain(bool use_window_dims);

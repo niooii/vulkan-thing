@@ -25,6 +25,7 @@ int main() {
 
     while(!window.requested_quit()) {
         window.PollEvents();
+        renderer.DrawFrame();
     }
     return 0;
 }

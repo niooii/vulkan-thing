@@ -20,7 +20,8 @@ namespace Engine {
 
     bool Renderer::DrawFrame() {
 
-
+        backend->DrawFrame();
+        return true;
 
     }
 

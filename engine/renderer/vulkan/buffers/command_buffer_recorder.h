@@ -15,8 +15,14 @@ namespace Engine::Vulkan {
         CommandBufferRecorder(const CommandBufferRecorder&) = delete;
         CommandBufferRecorder& operator= (const CommandBufferRecorder&) = delete;
 
+        // Accessors
+        inline VkCommandBuffer vk_cmd_buffer() {
+            return vk_cmd_buffer_;
+        }
+
         // Record and submit command buffers
         void RecordCommandBuffers(uint32_t image_index);
+        void ResetCommandBuffers();
 
     private:
         Device& device_;

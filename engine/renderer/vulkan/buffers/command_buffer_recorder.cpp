@@ -40,9 +40,9 @@ namespace Engine::Vulkan {
         VkRenderPassBeginInfo rp_info{};
         rp_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
         rp_info.renderPass = graphics_pipeline_.render_pass();
-        rp_info.framebuffer = swapchain_.frame_buffers()[image_index];
+        rp_info.framebuffer = swapchain_.vk_frame_buffers()[image_index];
         rp_info.renderArea.offset = {0, 0};
-        rp_info.renderArea.extent = swapchain_.extent();
+        rp_info.renderArea.extent = swapchain_.vk_extent();
 
         VkClearValue clear_color {
             {
@@ -64,15 +64,15 @@ namespace Engine::Vulkan {
         VkViewport viewport{};
         viewport.x = 0.0f;
         viewport.y = 0.0f;
-        viewport.width = static_cast<float>(swapchain_.extent().width);
-        viewport.height = static_cast<float>(swapchain_.extent().height);
+        viewport.width = static_cast<float>(swapchain_.vk_extent().width);
+        viewport.height = static_cast<float>(swapchain_.vk_extent().height);
         viewport.minDepth = 0.0f;
         viewport.maxDepth = 1.0f;
         vkCmdSetViewport(vk_cmd_buffer_, 0, 1, &viewport);
 
         VkRect2D scissor{};
         scissor.offset = {0, 0};
-        scissor.extent = swapchain_.extent();
+        scissor.extent = swapchain_.vk_extent();
         vkCmdSetScissor(vk_cmd_buffer_, 0, 1, &scissor);
 
         vkCmdDraw(vk_cmd_buffer_, 3, 1, 0, 0);
@@ -80,6 +80,10 @@ namespace Engine::Vulkan {
         vkCmdEndRenderPass(vk_cmd_buffer_);
 
         Utils::ExpectBadResult("Failed to end command buffer", vkEndCommandBuffer(vk_cmd_buffer_));
+    }
+
+    void CommandBufferRecorder::ResetCommandBuffers() {
+        vkResetCommandBuffer(vk_cmd_buffer_, 0);
     }
 
 }
