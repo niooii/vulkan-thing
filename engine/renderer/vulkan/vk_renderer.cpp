@@ -50,6 +50,7 @@ namespace Engine::Vulkan {
 
     VkRenderer::~VkRenderer() {
         spdlog::info("Shutting down renderer...");
+        vkDeviceWaitIdle(device_->vk_device());
     }
 
     void VkRenderer::Resize(u16 w, u16 h) {
@@ -66,6 +67,12 @@ namespace Engine::Vulkan {
 
     void VkRenderer::DrawFrame() {
         spdlog::info("start draw frame fn");
+
+        // wait until previous frame is finished
+        VkFence inflight_fence = swapchain_->vk_inflight_fence();
+        vkWaitForFences(device_->vk_device(), 1, &inflight_fence, VK_TRUE, 2000000000);
+        vkResetFences(device_->vk_device(), 1, &inflight_fence);
+
         cmd_recorder_->ResetCommandBuffers();
         uint32_t image_idx = swapchain_->AcquireNextImageIdx();
         cmd_recorder_->RecordCommandBuffers(image_idx);

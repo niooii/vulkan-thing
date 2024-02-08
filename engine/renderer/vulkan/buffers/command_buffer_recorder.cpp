@@ -55,9 +55,6 @@ namespace Engine::Vulkan {
         rp_info.clearValueCount = 1;
         rp_info.pClearValues = &clear_color;
 
-        // TODO!
-        VkSubpassContents subpass_contents{};
-
         vkCmdBeginRenderPass(vk_cmd_buffer_, &rp_info, VK_SUBPASS_CONTENTS_INLINE);
         vkCmdBindPipeline(vk_cmd_buffer_, VK_PIPELINE_BIND_POINT_GRAPHICS, graphics_pipeline_.vk_pipeline());
 
@@ -83,7 +80,10 @@ namespace Engine::Vulkan {
     }
 
     void CommandBufferRecorder::ResetCommandBuffers() {
-        vkResetCommandBuffer(vk_cmd_buffer_, 0);
+        Utils::ExpectBadResult(
+                "Failed to reset command buffers",
+                vkResetCommandBuffer(vk_cmd_buffer_, 0)
+                );
     }
 
 }
