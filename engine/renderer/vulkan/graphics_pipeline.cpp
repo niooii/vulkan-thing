@@ -143,9 +143,9 @@ namespace Engine::Vulkan {
 
         pipeline_info.layout = vk_pipeline_layout_;
 
-        render_pass_ = CreateRenderPass();
+        vk_render_pass_ = CreateRenderPass();
 
-        pipeline_info.renderPass = render_pass_;
+        pipeline_info.renderPass = vk_render_pass_;
         pipeline_info.subpass = 0;
 
         // weird optional stuff
@@ -164,15 +164,11 @@ namespace Engine::Vulkan {
         vkDestroyShaderModule(device_.vk_device(), vert_shader_module_, nullptr);
         vkDestroyShaderModule(device_.vk_device(), frag_shader_module_, nullptr);
 
-        vkDestroyRenderPass(device_.vk_device(), render_pass_, nullptr);
+        vkDestroyRenderPass(device_.vk_device(), vk_render_pass_, nullptr);
 
         vkDestroyPipeline(device_.vk_device(), vk_pipeline_, nullptr);
         vkDestroyPipelineLayout(device_.vk_device(), vk_pipeline_layout_, nullptr);
         spdlog::debug("Vulkan graphics pipeline destroyed");
-    }
-
-    VkRenderPass GraphicsPipeline::render_pass() {
-        return render_pass_;
     }
 
     VkShaderModule GraphicsPipeline::CreateShaderModule(std::string_view& filename) {

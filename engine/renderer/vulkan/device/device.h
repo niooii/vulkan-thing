@@ -25,9 +25,15 @@ namespace Engine::Vulkan {
         Device& operator= (const Device&) = delete;
 
         // Accessors
-        VkDevice vk_device();
-        QueueFamilyIndices& get_queue_families();
-        SwapchainSupportedProperties& get_swapchain_support_properties();
+        inline VkDevice vk_device() {
+            return vk_logical_;
+        }
+        inline QueueFamilyIndices& get_queue_families() {
+            return queue_family_indices_;
+        }
+        inline SwapchainSupportedProperties& get_swapchain_support_properties() {
+            return sc_supported_properties_;
+        }
 
         // TODO! temporary, figure out what to do with this later
         VkQueue graphics_queue_handle;

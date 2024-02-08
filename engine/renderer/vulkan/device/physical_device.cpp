@@ -6,18 +6,6 @@ namespace Engine::Vulkan {
         vkGetPhysicalDeviceProperties(vk_physical_, &vk_device_properties_);
     }
 
-    std::string_view PhysicalDevice::name() {
-        return {vk_device_properties_.deviceName};
-    }
-
-    VkPhysicalDevice PhysicalDevice::vk_physical() {
-        return vk_physical_;
-    }
-
-    const std::vector<const char*>& PhysicalDevice::required_device_extensions() {
-        return required_device_extensions_;
-    }
-
     QueueFamilyIndices& PhysicalDevice::get_queue_families(Surface& surface) {
 
         if (queue_family_indices_.has_value()) {

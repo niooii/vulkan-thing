@@ -21,7 +21,10 @@ namespace Engine::Vulkan {
         Instance(const Instance&) = delete;
         Instance& operator= (const Instance&) = delete;
 
-        VkInstance vk_instance();
+        // Accessors
+        inline VkInstance vk_instance() {
+            return vk_instance_;
+        }
 
     private:
         VkInstance vk_instance_;

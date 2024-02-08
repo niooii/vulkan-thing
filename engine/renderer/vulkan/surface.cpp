@@ -16,8 +16,4 @@ namespace Engine::Vulkan {
         vkDestroySurfaceKHR(instance_.vk_instance(), vk_surface_,   nullptr);
     }
 
-    VkSurfaceKHR Surface::vk_surface() {
-        return vk_surface_;
-    }
-
 }

@@ -18,7 +18,12 @@ namespace Engine::Vulkan {
         GraphicsPipeline& operator= (const GraphicsPipeline&) = delete;
 
         // Accessors
-        VkRenderPass render_pass();
+        inline VkPipeline vk_pipeline() {
+            return vk_pipeline_;
+        }
+        inline VkRenderPass render_pass() {
+            return vk_render_pass_;
+        }
 
     private:
         Device& device_;
@@ -26,7 +31,7 @@ namespace Engine::Vulkan {
 
         VkPipeline vk_pipeline_;
         VkPipelineLayout vk_pipeline_layout_;
-        VkRenderPass render_pass_;
+        VkRenderPass vk_render_pass_;
         VkShaderModule vert_shader_module_;
         VkShaderModule frag_shader_module_;
 

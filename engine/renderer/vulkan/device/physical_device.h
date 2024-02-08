@@ -15,9 +15,15 @@ namespace Engine::Vulkan {
     public:
         explicit PhysicalDevice(VkPhysicalDevice vk_physical);
         // Accessors
-        std::string_view name();
-        VkPhysicalDevice vk_physical();
-        const std::vector<const char*>& required_device_extensions();
+        inline const char* name() {
+            return vk_device_properties_.deviceName;
+        }
+        inline VkPhysicalDevice vk_physical() {
+            return vk_physical_;
+        }
+        inline const std::vector<const char*>& required_device_extensions() {
+            return required_device_extensions_;
+        }
 
         QueueFamilyIndices& get_queue_families(Surface& surface);
         SwapchainSupportedProperties& get_swapchain_support_properties(Surface& surface);

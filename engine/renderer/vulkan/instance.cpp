@@ -55,10 +55,6 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan instance destroyed.");
     }
 
-    VkInstance Instance::vk_instance() {
-        return vk_instance_;
-    }
-
     // Internal
     bool Instance::ValidationLayersSupported(std::vector<const char*>& validation_layers) {
         uint32_t num_layers;

@@ -45,18 +45,6 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan device destroyed.");
     }
 
-    VkDevice Device::vk_device() {
-        return vk_logical_;
-    }
-
-    QueueFamilyIndices& Device::get_queue_families() {
-        return queue_family_indices_;
-    }
-
-    SwapchainSupportedProperties& Device::get_swapchain_support_properties() {
-        return sc_supported_properties_;
-    }
-
     std::vector<VkDeviceQueueCreateInfo> Device::GetQueueCreateInfos(QueueFamilyIndices &indices) {
         VkDeviceQueueCreateInfo graphics_create_info{};
         graphics_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;

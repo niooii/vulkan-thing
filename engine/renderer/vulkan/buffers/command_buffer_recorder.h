@@ -24,7 +24,7 @@ namespace Engine::Vulkan {
         GraphicsPipeline& graphics_pipeline_;
 
         VkCommandPool vk_cmd_pool_;
-        VkCommandBuffer vk_buffer;
+        VkCommandBuffer vk_cmd_buffer_;
 
     };
 

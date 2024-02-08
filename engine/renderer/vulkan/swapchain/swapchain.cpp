@@ -84,22 +84,6 @@ namespace Engine::Vulkan {
         spdlog::debug("Vulkan swapchain destroyed.");
     }
 
-    VkExtent2D Swapchain::extent() {
-        return extent_;
-    }
-
-    VkFormat Swapchain::image_format() {
-        return image_format_;
-    }
-
-    std::vector<VkImageView>& Swapchain::image_views() {
-        return swapchain_image_views_;
-    }
-
-    std::vector<VkFramebuffer>& Swapchain::frame_buffers() {
-        return swapchain_frame_buffers_;
-    }
-
     void Swapchain::CreateFramebuffers(VkRenderPass render_pass) {
         swapchain_frame_buffers_.resize(swapchain_image_views_.size());
 
@@ -124,6 +108,7 @@ namespace Engine::Vulkan {
     bool Swapchain::AcquireNextImage() {
 //        vkAcquireNextImageKHR(device_.vk_device(), vk_swapchain_, 3000000000000,
 //                              semaphore, fence, idx);
+
     }
     
     // Internal

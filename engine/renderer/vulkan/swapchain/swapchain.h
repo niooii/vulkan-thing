@@ -24,10 +24,18 @@ namespace Engine::Vulkan {
         // TODO! Explicitly set width and height
 
         // Accessors
-        VkExtent2D extent();
-        VkFormat image_format();
-        std::vector<VkImageView>& image_views();
-        std::vector<VkFramebuffer>& frame_buffers();
+        inline VkExtent2D extent() {
+            return extent_;
+        }
+        inline VkFormat image_format() {
+            return image_format_;
+        }
+        inline std::vector<VkImageView>& image_views() {
+            return swapchain_image_views_;
+        }
+        inline std::vector<VkFramebuffer>& frame_buffers() {
+            return swapchain_frame_buffers_;
+        }
 
         // initializes framebuffers
         void CreateFramebuffers(VkRenderPass render_pass);

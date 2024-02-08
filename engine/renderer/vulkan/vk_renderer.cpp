@@ -16,7 +16,7 @@ namespace Engine::Vulkan {
         std::vector<PhysicalDevice> physical_devices = DeviceUtils::GetPhysicalDevices(instance);
 
         assert(!physical_devices.empty());
-
+        spdlog::debug("Using device {}.", physical_devices[0].name());
         device_.emplace(
                 instance, surface, physical_devices[0]
                 );

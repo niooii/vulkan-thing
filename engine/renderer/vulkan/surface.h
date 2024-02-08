@@ -21,7 +21,9 @@ namespace Engine::Vulkan {
         Surface& operator= (const Surface&) = delete;
 
         // Accessors
-        VkSurfaceKHR vk_surface();
+        inline VkSurfaceKHR vk_surface() {
+            return vk_surface_;
+        }
 
     private:
         Instance& instance_;

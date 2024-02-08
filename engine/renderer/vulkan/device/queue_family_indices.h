@@ -10,7 +10,7 @@ namespace Engine::Vulkan {
         std::optional<uint32_t> graphics_family;
         std::optional<uint32_t> present_family;
 
-        bool all_exist() const {
+        inline bool all_exist() const {
             return graphics_family.has_value() && present_family.has_value();
         }
 
