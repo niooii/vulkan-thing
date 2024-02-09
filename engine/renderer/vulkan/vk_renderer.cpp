@@ -2,10 +2,10 @@
 
 namespace Engine::Vulkan {
 
-    VkRenderer::VkRenderer(const char* application_name, Window& window, bool validation_layers_enabled) {
+    VkRenderer::VkRenderer(const char* application_name, Window& window, bool debug) {
 
         // init instance
-        opt_instance_.emplace(application_name, "onion engine", window, validation_layers_enabled);
+        opt_instance_.emplace(application_name, "onion engine", window, debug);
         Instance& instance = opt_instance_.value();
 
         opt_surface_.emplace(

@@ -21,7 +21,7 @@ namespace Engine::Vulkan {
     class VkRenderer : public RendererInterface {
     public:
         // The parameters passed in are used to create the underlying Vulkan opt_instance_.
-        VkRenderer(const char* application_name, Window &window, bool validation_layers_enabled);
+        VkRenderer(const char* application_name, Window &window, bool debug);
         // Destroys all resources in *deliberate* order.
         ~VkRenderer() override;
 
