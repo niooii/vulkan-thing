@@ -9,6 +9,7 @@
 #include <spdlog/spdlog.h>
 
 #include <stdexcept>
+#include <renderer/vulkan/frame_sync.h>
 
 namespace Engine::Vulkan {
 
@@ -39,19 +40,14 @@ namespace Engine::Vulkan {
         inline std::vector<VkFramebuffer>& vk_frame_buffers() {
             return swapchain_frame_buffers_;
         }
-        inline VkSemaphore vk_image_available_sempahore() {
-            return vk_image_available_semaphore_;
-        }
-        inline VkSemaphore vk_render_finished_semaphore() {
-            return vk_render_finished_semaphore_;
-        }
-        inline VkFence vk_inflight_fence() {
-            return vk_inflight_fence_;
+        inline FrameSync& frame_sync() {
+            return frame_syncs[0];
         }
 
         // initializes framebuffers
         void CreateFramebuffers(VkRenderPass render_pass);
         uint32_t AcquireNextImageIdx();
+        void Present();
         bool Resize();
 
 
@@ -69,9 +65,7 @@ namespace Engine::Vulkan {
         std::vector<VkImage> swapchain_images_;
         std::vector<VkImageView> swapchain_image_views_;
         std::vector<VkFramebuffer> swapchain_frame_buffers_;
-        VkSemaphore vk_image_available_semaphore_;
-        VkSemaphore vk_render_finished_semaphore_;
-        VkFence vk_inflight_fence_;
+        std::vector<FrameSync> frame_syncs;
 
         // Internal
         void InitSwapchain(bool use_window_dims);

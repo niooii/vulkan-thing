@@ -66,10 +66,12 @@ namespace Engine::Vulkan {
     }
 
     void VkRenderer::DrawFrame() {
-        spdlog::info("start draw frame fn");
+//        spdlog::info("start draw frame fn");
+        clock_.Resume();
 
         // wait until previous frame is finished
-        VkFence inflight_fence = swapchain_->vk_inflight_fence();
+        FrameSync& fs = swapchain_->frame_sync();
+        VkFence inflight_fence = fs.in_flight_fence();
         vkWaitForFences(device_->vk_device(), 1, &inflight_fence, VK_TRUE, 2000000000);
         vkResetFences(device_->vk_device(), 1, &inflight_fence);
 
@@ -80,7 +82,7 @@ namespace Engine::Vulkan {
         VkSubmitInfo submit_info{};
         submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-        VkSemaphore waitSemaphores[] = {swapchain_->vk_image_available_sempahore()};
+        VkSemaphore waitSemaphores[] = {fs.image_available_semaphore()};
         VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
         submit_info.waitSemaphoreCount = 1;
         submit_info.pWaitSemaphores = waitSemaphores;
@@ -90,13 +92,13 @@ namespace Engine::Vulkan {
         VkCommandBuffer cmd_buffer = cmd_recorder_->vk_cmd_buffer();
         submit_info.pCommandBuffers = &cmd_buffer;
 
-        VkSemaphore signal_semaphores[] = {swapchain_->vk_render_finished_semaphore()};
+        VkSemaphore signal_semaphores[] = {fs.render_finished_semaphore()};
         submit_info.signalSemaphoreCount = 1;
         submit_info.pSignalSemaphores = signal_semaphores;
 
         Utils::ExpectBadResult(
                 "Failed to submit cmd buffer to queue",
-                vkQueueSubmit(device_->graphics_queue_handle, 1, &submit_info, swapchain_->vk_inflight_fence())
+                vkQueueSubmit(device_->graphics_queue_handle, 1, &submit_info, fs.in_flight_fence())
                 );
 
         VkSubpassDependency dependency{};
@@ -132,7 +134,11 @@ namespace Engine::Vulkan {
 //
 //        VkResult res = vkWaitSemaphores(device_->vk_device(), &wait_info, 2000000000);
 //        Utils::ExpectBadResult("something", res);
-        spdlog::info("end draw frame fn");
+//        spdlog::info("end draw frame fn");
+
+        clock_.Pause();
+        spdlog::info("DrawFrame fn took {}s to execute.", clock_.ElapsedSeconds());
+//        printf("======== ELAPSED TIME: %f", clock_.ElapsedSeconds());
     }
 
 }

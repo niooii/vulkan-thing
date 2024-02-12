@@ -70,22 +70,8 @@ namespace Engine::Vulkan {
         CreateImages();
         CreateImageViews();
 
-        // TODO! CREATE SYNC OBJECTS, REFACTOR LATER
-        VkSemaphoreCreateInfo semaphore_info{};
-        semaphore_info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-
-        VkFenceCreateInfo fence_info{};
-        fence_info.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
-
-        Utils::ExpectBadResult("Failed to create semaphore", vkCreateSemaphore(
-                device.vk_device(), &semaphore_info, nullptr, &vk_image_available_semaphore_
-                ));
-        Utils::ExpectBadResult("Failed to create semaphore", vkCreateSemaphore(
-                device.vk_device(), &semaphore_info, nullptr, &vk_render_finished_semaphore_
-                ));
-        Utils::ExpectBadResult("Failed to create fence", vkCreateFence(
-                device.vk_device(), &fence_info, nullptr, &vk_inflight_fence_
-                ));
+        // TODO! refactor later
+        frame_syncs.emplace_back(device_);
     }
 
     Swapchain::~Swapchain() {
@@ -97,25 +83,6 @@ namespace Engine::Vulkan {
         }
 
         vkDestroySwapchainKHR(device_.vk_device(), vk_swapchain_, nullptr);
-
-        // TODO! DESTROY SYNC OBJECTS, REFACTOR LATER
-
-        vkDestroySemaphore(
-                device_.vk_device(),
-                vk_image_available_semaphore_,
-                nullptr
-                );
-        vkDestroySemaphore(
-                device_.vk_device(),
-                vk_render_finished_semaphore_,
-                nullptr
-                );
-        vkDestroyFence(
-                device_.vk_device(),
-                vk_inflight_fence_,
-                nullptr
-                );
-
 
         spdlog::debug("Vulkan swapchain destroyed.");
     }
@@ -146,7 +113,7 @@ namespace Engine::Vulkan {
         Utils::ExpectBadResult(
                 "Failed to fetch next image idx from swapchain",
                 vkAcquireNextImageKHR(device_.vk_device(), vk_swapchain_, 3000000000000,
-                                      vk_image_available_semaphore_, VK_NULL_HANDLE, &idx)
+                                      frame_syncs[0].image_available_semaphore(), VK_NULL_HANDLE, &idx)
                 );
         return idx;
     }

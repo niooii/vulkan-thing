@@ -11,7 +11,7 @@ namespace Engine::Core {
     public:
         // This will start running from the moment it's instantiated.
         Clock();
-        // If true, the clock will start in a paused state.
+        // If true, the clock_ will start in a paused state.
         explicit Clock(bool start_paused);
 
         f64 ElapsedSeconds();
@@ -21,7 +21,7 @@ namespace Engine::Core {
 
     private:
         f64 start_time;
-        f64 elapsed_secs;
+        f64 since_epoch;
         f64 time_at_pause;
         bool is_paused{false};
 

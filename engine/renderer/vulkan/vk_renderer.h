@@ -8,6 +8,7 @@
 #include "device/device.h"
 #include "device/device_utils.h"
 #include "utils.h"
+#include "core/clock.h"
 #include <renderer/renderer_interface.h>
 #include <renderer/vulkan/buffers/command_buffer_recorder.h>
 
@@ -47,6 +48,9 @@ namespace Engine::Vulkan {
         std::optional<Swapchain> opt_swapchain_;
         std::optional<GraphicsPipeline> opt_graphics_pipeline_;
         std::optional<CommandBufferRecorder> opt_cmd_recorder_;
+
+        // stats && analytics
+        Core::Clock clock_{};
 
         // workaround late initialization
         Instance* instance_;
