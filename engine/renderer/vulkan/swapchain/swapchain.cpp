@@ -125,45 +125,7 @@ namespace Engine::Vulkan {
     }
 
     void Swapchain::Present(VkSemaphore render_complete_semaphore, uint32_t image_idx) {
-        VkFence inflight_fence = fs.in_flight_fence();
-        vkWaitForFences(device_->vk_device(), 1, &inflight_fence, VK_TRUE, 2000000000);
-        vkResetFences(device_->vk_device(), 1, &inflight_fence);
-
-        cmd_recorder_->ResetCommandBuffers();
-        uint32_t image_idx = swapchain_->AcquireNextImageIdx();
-        cmd_recorder_->RecordCommandBuffers(image_idx);
-
-        VkSubmitInfo submit_info{};
-        submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-
-        VkSemaphore waitSemaphores[] = {fs.image_available_semaphore()};
-        VkPipelineStageFlags waitStages[] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
-        submit_info.waitSemaphoreCount = 1;
-        submit_info.pWaitSemaphores = waitSemaphores;
-        submit_info.pWaitDstStageMask = waitStages;
-
-        submit_info.commandBufferCount = 1;
-        VkCommandBuffer cmd_buffer = cmd_recorder_->vk_cmd_buffer();
-        submit_info.pCommandBuffers = &cmd_buffer;
-
-        VkSemaphore signal_semaphores[] = {fs.render_finished_semaphore()};
-        submit_info.signalSemaphoreCount = 1;
-        submit_info.pSignalSemaphores = signal_semaphores;
-
-        Utils::ExpectBadResult(
-                "Failed to submit cmd buffer to queue",
-                vkQueueSubmit(device_->graphics_queue_handle, 1, &submit_info, fs.in_flight_fence())
-        );
-
-        VkSubpassDependency dependency{};
-        dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
-        dependency.dstSubpass = 0;
-
-        dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-        dependency.srcAccessMask = 0;
-
-        dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-        dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+        VkSemaphore signal_semaphores[] = {render_complete_semaphore};
 
         VkPresentInfoKHR present_info{};
         present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
