@@ -47,7 +47,7 @@ namespace Engine::Vulkan {
         // initializes framebuffers
         void CreateFramebuffers(VkRenderPass render_pass);
         uint32_t AcquireNextImageIdx();
-        void Present();
+        void Present(VkSemaphore render_complete_semaphore, uint32_t image_idx);
         bool Resize();
 
 
@@ -68,7 +68,7 @@ namespace Engine::Vulkan {
         std::vector<FrameSync> frame_syncs;
 
         // Internal
-        void InitSwapchain(bool use_window_dims);
+        void Recreate(bool use_window_dims);
         VkSurfaceFormatKHR OptimalFormat();
         VkPresentModeKHR OptimalPresentMode();
         VkExtent2D GetSwapExtent();
