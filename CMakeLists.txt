@@ -104,7 +104,7 @@ main.cpp
         engine/math/Vector2.h
         engine/renderer/vulkan/buffers/command_buffer_recorder.cpp
         engine/renderer/vulkan/buffers/command_buffer_recorder.h
-        engine/renderer/vulkan/sync/semaphores.h
+        engine/renderer/vulkan/frame_sync.cpp
 )
 
 # add_dependencies(vulkan_stuff Shaders)
