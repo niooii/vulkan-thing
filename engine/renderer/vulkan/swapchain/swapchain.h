@@ -69,7 +69,7 @@ namespace Engine::Vulkan {
         uint32_t max_frames_in_flight_ = 2;
 
         // Internal
-        void Recreate(bool use_window_dims){};
+        void Recreate(bool use_window_dims){ };
         VkSurfaceFormatKHR OptimalFormat();
         VkPresentModeKHR OptimalPresentMode();
         VkExtent2D GetSwapExtent();
