@@ -9,7 +9,7 @@ set (CMAKE_CXX_FLAGS_RELEASE "-Ofast")
 set (CMAKE_CXX_FLAGS_DEBUG "-O0")
 
 if (WIN32) 
-    set(SDL2_DIR "E:\\SDL2\\SDL2-2.28.5\\cmake")
+    set(SDL2_DIR "E:\\libs\\SDL2-2.28.5\\cmake")
 #    set(spdlog_DIR "E:\\spdlog\\build")
 #    set(spdlog_win_INCLUDE_DIRS "E:\\spdlog\\include\\spdlog")
 endif()

@@ -7,7 +7,7 @@
 
 //MY INCLUDES
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 namespace Engine {
     // Window should not outlive RendererBackend

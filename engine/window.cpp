@@ -1,5 +1,5 @@
 #include "window.h"
-#include <SDL_video.h>
+#include <SDL2/SDL_video.h>
 
 namespace Engine {
     Window::Window(const char *name, int x, int y, int w, int h) {
